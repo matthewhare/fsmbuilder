@@ -6,11 +6,24 @@ package model
 		
 		private var _states:Vector.<StateVO>;
 		
+		private var _packageName:String = "org.fsmbuilder.fsm"
+		
+		
 		public function FSMModel()
 		{
 			_states = new Vector.<StateVO>();
 		}
 		
+		
+		public function get packageName():String
+		{
+			return _packageName;
+		}
+		
+		public function set packageName(value:String):void
+		{
+			_packageName = value;
+		}
 		
 		public function get states():Vector.<StateVO>
 		{
@@ -68,6 +81,8 @@ package model
 			return result;
 			
 		}
+
+
 
 	}
 }

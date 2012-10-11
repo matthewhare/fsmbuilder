@@ -21,6 +21,8 @@
 			import view.StateView;
 			import view.TransitionView;
 			
+			import writers.ActionScriptWriter;
+			
 			
 			protected function save():void
 			{
@@ -40,7 +42,7 @@
 			
 			protected function outputUpdate(event:FlexEvent = null):void
 			{
-				output.text = FSMmodel.getActionScript();
+				output.text = ActionScriptWriter.getFileContent(FSMmodel);
 			}
 			
 		]]>
