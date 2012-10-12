@@ -6,6 +6,7 @@ package utils.autoupdate
 	{
 		public function AutoUpdater()
 		{
+			checkUpdate();
 		}
 		
 		import air.update.events.UpdateEvent;
@@ -13,13 +14,13 @@ package utils.autoupdate
 		import flash.events.ErrorEvent; 
 		import air.update.ApplicationUpdaterUI; /** * @var the object that that handles the update related actions */ 
 		
-		static private var appUpdater:ApplicationUpdaterUI = new ApplicationUpdaterUI(); 
+		private var appUpdater:ApplicationUpdaterUI = new ApplicationUpdaterUI(); 
 		
 		/** This function is triggered when the application finished to load; 
 		 * Here we initialize <code>appUpdater</code> and set some properties 
 		 **/ 
 		
-		static private function checkUpdate():void 
+		private function checkUpdate():void 
 		{ 
 			setApplicationVersion(); 
 			// we set the URL for the update.xml file 
@@ -30,11 +31,11 @@ package utils.autoupdate
 			appUpdater.addEventListener(ErrorEvent.ERROR, onError); 
 			//we can hide the dialog asking for permission for checking for a new update;
 			//if you want to see it just leave the default value (or set true).
-			appUpdater.isCheckForUpdateVisible = false; 
+			appUpdater.isCheckForUpdateVisible = true; 
 			//if isFileUpdateVisible is set to true, File Update, File No Update, //
 			// and File Error dialog boxes will be displayed appUpdater.isFileUpdateVisible = false; 
 			//if isInstallUpdateVisible is set to true, the dialog box for installing the update is visible 
-			appUpdater.isInstallUpdateVisible = false; 
+			appUpdater.isInstallUpdateVisible = true; 
 			//we initialize the updater 
 			appUpdater.initialize(); 
 		} 
@@ -45,9 +46,10 @@ package utils.autoupdate
 		 * * (such as <code>checkNow()</code> 
 		 * * @param UpdateEvent 
 		 * */ 
-		static private function onUpdate(event:UpdateEvent):void 
+		private function onUpdate(event:UpdateEvent):void 
 		{ 
 			//start the process of checking for a new update and to install 
+			AutoUpdater.version = "checking.."
 			appUpdater.checkNow(); 
 		}
 		
@@ -55,23 +57,24 @@ package utils.autoupdate
 		 * * Handler function for error events triggered by the ApplicationUpdater.initialize 
 		 * * @param ErrorEvent 
 		 * */ 
-		static private function onError(event:ErrorEvent):void 
+		private function onError(event:ErrorEvent):void 
 		{ 
-			Alert.show(event.toString()); 
+			AutoUpdater.version = "error : " + event.toString()
+//			Alert.show(event.toString()); 
 		} 
 		
 		/** 
 		 * * A simple code just to read the current version of the application 
 		 * * and display it in a label. 
 		 * */ 
-		static private function setApplicationVersion():void 
+		private function setApplicationVersion():void 
 		{ 
 			var appXML:XML = NativeApplication.nativeApplication.applicationDescriptor; 
 			var ns:Namespace = appXML.namespace(); 
-			AutoUpdater.version = "App version:" + appXML.ns::version; 
+			AutoUpdater.version = "v:" + appXML.ns::version; 
 		} 
 		
 		[Bindable]
-		static public var version:String = "checking..";
+		static public var version:String = "..";
 	}
 }

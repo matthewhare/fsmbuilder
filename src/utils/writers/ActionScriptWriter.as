@@ -26,6 +26,7 @@ package utils.writers
 				result += constLine(fsm.states[i].name); 
 			}
 			
+			if (fsm.states.length>0)
 			result += tabIndent(3) + 'public var FSM:XML = <fsm initial="'+fsm.states[0].name+'">' + lineBreak(1);
 			
 			// loop through states
