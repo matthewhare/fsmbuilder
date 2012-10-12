@@ -31,11 +31,11 @@ package utils.autoupdate
 			appUpdater.addEventListener(ErrorEvent.ERROR, onError); 
 			//we can hide the dialog asking for permission for checking for a new update;
 			//if you want to see it just leave the default value (or set true).
-			appUpdater.isCheckForUpdateVisible = true; 
+			appUpdater.isCheckForUpdateVisible = false; 
 			//if isFileUpdateVisible is set to true, File Update, File No Update, //
 			// and File Error dialog boxes will be displayed appUpdater.isFileUpdateVisible = false; 
 			//if isInstallUpdateVisible is set to true, the dialog box for installing the update is visible 
-			appUpdater.isInstallUpdateVisible = true; 
+			appUpdater.isInstallUpdateVisible = false; 
 			//we initialize the updater 
 			appUpdater.initialize(); 
 		} 
