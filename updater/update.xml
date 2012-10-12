@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<update xmlns="http://ns.adobe.com/air/framework/update/description/1.0">
+	<version>0.3</version> 
+	<url>https://raw.github.com/matthewhare/fsmbuilder/tree/master/final/FSMBuilder.air</url>
+	<description><![CDATA[Autoupdater has been added]]></description> 
+</update>
