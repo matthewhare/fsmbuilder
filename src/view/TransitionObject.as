@@ -2,15 +2,15 @@ package view
 {
 	import flash.events.Event;
 	
-	import model.StateVO;
-	import model.TransitionVO;
+	import model.diagram.StateVO;
+	import model.diagram.TransitionVO;
 	
 	import mx.binding.utils.ChangeWatcher;
 	import mx.core.UIComponent;
 	
 	import spark.components.Label;
 
-	public class TransitionView extends UIComponent 
+	public class TransitionObject extends UIComponent 
 	{
 		[Bindable]
 		public var vo:TransitionVO;
@@ -23,7 +23,7 @@ package view
 		private var _changeWatcherFrom:ChangeWatcher
 		private var _changeWatcherTarget:ChangeWatcher
 		
-		public function TransitionView()
+		public function TransitionObject()
 		{
 			vo = new TransitionVO();
 			vo.action = "Action";

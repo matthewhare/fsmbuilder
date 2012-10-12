@@ -1,12 +1,12 @@
-package model
+package model.diagram
 {
 	[RemoteClass]
-	public class DiagramPoint
+	public class DiagramPointVO
 	{
 		private var _x:Number;
 		private var _y:Number;
 		
-		public function DiagramPoint(x:Number = 0, y:Number = 0)
+		public function DiagramPointVO(x:Number = 0, y:Number = 0)
 		{
 			_x = x;
 			_y = y;

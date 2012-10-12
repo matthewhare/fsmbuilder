@@ -9,12 +9,12 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import model.FSMModel;
+			import model.diagram.FSMModel;
 			
 			[Bindable]
 			public var FSMmodel:FSMModel
 
-			private var _newTransition:TransitionView;
+			private var _newTransition:TransitionObject;
 
 			
 			public function creationComplete():void
@@ -27,10 +27,10 @@
 			
 			private function transitionAdd(event:Event):void
 			{
-				if (event.target is StateView)
+				if (event.target is DefaultStateObject)
 				{
-					var stateView:StateView = StateView(event.target);
-					_newTransition = new TransitionView();
+					var stateView:DefaultStateObject = DefaultStateObject(event.target);
+					_newTransition = new TransitionObject();
 					_newTransition.stateFrom = stateView.vo; 
 					addTransition(_newTransition);
 					this.addEventListener(MouseEvent.MOUSE_MOVE, transitionDrag);
@@ -45,9 +45,9 @@
 			
 			private function transitionConnect(event:Event):void
 			{
-				if (event.target is StateView && _newTransition)
+				if (event.target is DefaultStateObject && _newTransition)
 				{
-					var stateView:StateView = StateView(event.target);
+					var stateView:DefaultStateObject = DefaultStateObject(event.target);
 					// if linked to the same state - don't bother
 					if (_newTransition.stateFrom == stateView.vo)
 					{
@@ -78,7 +78,7 @@
 			public function stateCreate(useMousePosition:Boolean = false):void
 			{
 				var count:int = FSMmodel.states.length
-				var state:StateView = new StateView();
+				var state:DefaultStateObject = new DefaultStateObject();
 					state.vo = FSMmodel.createNewStateVO();
 					state.vo.name = "state " + count;
 					
@@ -99,7 +99,7 @@
 			
 			public function stateDelete(event:Event):void
 			{
-				var sv:StateView = StateView(event.target);
+				var sv:DefaultStateObject = DefaultStateObject(event.target);
 				FSMmodel.deleteState(sv.vo);
 				removeState(sv);
 			}
@@ -114,22 +114,22 @@
 				}
 			}
 			
-			public function addState(value:StateView):void
+			public function addState(value:DefaultStateObject):void
 			{
 				stateCanvas.addElement(value);
 			}
 			
-			public function removeState(value:StateView):void
+			public function removeState(value:DefaultStateObject):void
 			{
 				stateCanvas.removeElement(value);
 			}
 			
-			public function addTransition(value:TransitionView):void
+			public function addTransition(value:TransitionObject):void
 			{
 				transitionCanvas.addElement(value);
 			}
 			
-			public function removeTransition(value:TransitionView):void
+			public function removeTransition(value:TransitionObject):void
 			{
 				transitionCanvas.removeElement(value);
 			}

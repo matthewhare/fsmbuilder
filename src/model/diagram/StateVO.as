@@ -1,6 +1,6 @@
-package model
+package model.diagram
 {
-	import model.DiagramPoint;
+	import model.diagram.DiagramPointVO;
 
 	[RemoteClass]
 	public class StateVO
@@ -15,7 +15,7 @@ package model
 		private var _cancelled:String;
 		private var _changed:String;
 		
-		private var _viewCoords:DiagramPoint = new DiagramPoint(0,0);
+		private var _viewCoords:DiagramPointVO = new DiagramPointVO(0,0);
 		private var _viewColour:int;
 		
 		private var _transitions:Vector.<TransitionVO>
@@ -147,12 +147,12 @@ package model
 		}
 
 		[Bindable]
-		public function get viewCoords():DiagramPoint
+		public function get viewCoords():DiagramPointVO
 		{
 			return _viewCoords;
 		}
 
-		public function set viewCoords(value:DiagramPoint):void
+		public function set viewCoords(value:DiagramPointVO):void
 		{
 			_viewCoords = value;
 		}

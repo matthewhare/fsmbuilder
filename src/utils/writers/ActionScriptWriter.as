@@ -1,8 +1,8 @@
-package writers
+package utils.writers
 {
-	import model.FSMModel;
-	import model.StateVO;
-	import model.TransitionVO;
+	import model.diagram.FSMModel;
+	import model.diagram.StateVO;
+	import model.diagram.TransitionVO;
 
 	public class ActionScriptWriter
 	{
@@ -10,7 +10,7 @@ package writers
 		{
 		}
 		
-		static public function getFileContent(fsm:FSMModel):String
+		public function getFileContent(fsm:FSMModel):String
 		{
 			var result:String = "";
 
@@ -63,7 +63,7 @@ package writers
 		}
 		
 		
-		static private function tabIndent(value:int):String
+		private function tabIndent(value:int):String
 		{
 			var result:String = "";
 			for (var i:int = 0; i < value; i++) 
@@ -74,7 +74,7 @@ package writers
 			return result;	
 		}
 		
-		static private function lineBreak(value:int):String
+		private function lineBreak(value:int):String
 		{
 			var result:String = "";
 			for (var i:int = 0; i < value; i++) 
@@ -85,42 +85,42 @@ package writers
 			return result;
 		}
 		
-		static private function packageOpen(packageName:String):String
+		private function packageOpen(packageName:String):String
 		{
 			return "package " + packageName + lineBreak(1) + "{" + lineBreak(2);
 		}
 		
-		static private function packageClose():String
+		private function packageClose():String
 		{
 			return "}";
 		}
 		
-		static private function classOpen():String
+		private function classOpen():String
 		{
 			return tabIndent(1) + "class FSMContants" + lineBreak(1) + tabIndent(1) + "{" + lineBreak(1);
 		}
 		
-		static private function classClose():String
+		private function classClose():String
 		{
 			return tabIndent(1) + "}" + lineBreak(1);
 		}
 		
-		static private function constLine(name:String):String
+		private function constLine(name:String):String
 		{
 			return tabIndent(3) + 'public const ' + name.toUpperCase().split(" ").join("_") + ':String = "state/' + name.split(" ").join("") + '";' + lineBreak(2);
 		}
 		
-		static private function stateOpen(name:String):String
+		private function stateOpen(name:String):String
 		{
 			return tabIndent(4) + '<state name="{'+name.toUpperCase().split(" ").join("_")+'}">' + lineBreak(1);
 		}
 		
-		static private function stateClose():String
+		private function stateClose():String
 		{
 			return tabIndent(4) + "</state>" + lineBreak(1);	
 		}
 		
-		static private function transitionLine(action:String, target:String):String
+		private function transitionLine(action:String, target:String):String
 		{
 			return tabIndent(5) + '<transition action="'+action+'" target="{'+target.toUpperCase().split(" ").join("_")+'"}/>' + lineBreak(1);
 		}

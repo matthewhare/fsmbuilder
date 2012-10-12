@@ -1,6 +1,6 @@
-package writers
+package utils.writers
 {
-	import model.FSMModel;
+	import model.diagram.FSMModel;
 
 	public interface IWriter
 	{
