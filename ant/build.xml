@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Build File" basedir="../" default="build">
+
+    <!--location of property file -->
+    <property file="${basedir}/ant/build.properties" description="your specific properities for builds" />
+    	
+    <!-- additional tasks -->
+	<taskdef resource="flexTasks.tasks" classpath="${FLEX_TASKS}" />
+
+    <!--
+
+
+       Build
+
+
+   -->
+
+    <target name="build" description="compiles application">
+		<echo message="build"/>
+        <antcall target="init"/>
+        <antcall target="package"/>
+        <antcall target="cleanup"/>
+    </target>
+
+    <target name="compile"
+        description="Compiles the AIR application to a SWF file and places SWF in a temp directory to be packaged.">
+    	<echo message="compile"/>
+        <mxmlc file="${SOURCE_DIR}/${APP_NAME}.${APP_EXTENSION}"
+            output="${BUILD_DIR}/${APP_NAME}.swf"
+            locale="${LOCALE}"
+            static-rsls="true"
+            accessible="true"
+            configname="air"
+            debug="${DEBUG_FLAG}"
+            failonerror="true"
+            fork="true"
+            maxmemory="512m">
+            <source-path path-element="${SOURCE_DIR}"/>
+            <external-library-path file="${FLEX_HOME}/frameworks/libs/air/airglobal.swc" append="true"/>
+            <library-path dir="${LIBRARY_DIR}" includes="*.swc" append="true"/>
+        </mxmlc>
+    </target>
+
+    <target name="certificate" unless="CERTIFICATE_FLAG">
+    	<echo message="certificate"/>
+        <java jar="${ADT}" fork="true"
+            failonerror="true">
+            <arg value="-certificate"/>
+            <arg value="-cn"/>
+            <arg value="${CERT_NAME}"/>
+            <arg value="-ou"/>
+            <arg value="${CERT_ORG_UNIT}"/>
+            <arg value="-o"/>
+            <arg value="${CERT_ORG_NAME}"/>
+            <arg value="-c"/>
+            <arg value="${CERT_COUNTRY}"/>
+            <arg value="${CERT_KEY_TYPE}"/>
+            <arg value="${KEYSTORE}"/>
+            <arg value="${CERT_PASSWORD}"/>
+        </java>
+    </target>
+
+    <target name="package" 
+    	depends="compile, certificate"
+        description="Packages the build SWF file from a temp directory.">
+    	<echo message="package"/>
+        <java jar="${ADT}" fork="true"
+            failonerror="true"
+            maxmemory="512m">
+            <arg value="-package"/>
+            <arg value="-storetype"/>
+            <arg value="${STORETYPE}"/>
+            <arg value="-keystore"/>
+            <arg value="${KEYSTORE}"/>
+            <arg value="-storepass"/>
+            <arg value="${CERT_PASSWORD}"/>
+            <arg value="${RELEASE_DIR}/${APP_NAME}.air"/>
+            <arg value="${SOURCE_DIR}/${APP_NAME}-app.xml"/>
+            <arg value="-C"/>
+            <arg value="${BUILD_DIR}"/>
+            <arg value="${BUILD_DIR}/${APP_NAME}.swf"/>
+        </java>
+    </target>
+
+    <target name="init" depends="clean"
+    description="Cleans the deploy file">
+        <mkdir dir="${BUILD_DIR}"/>
+        <mkdir dir="${RELEASE_DIR}"/>
+        <available file="${KEYSTORE}" property="CERTIFICATE_FLAG"/>
+    </target>
+
+    <target name="clean"
+        description="Cleans up old files.">
+        <delete dir="${BUILD_DIR}" failOnError="false" includeEmptyDirs="true" />
+        <delete dir="${RELEASE_DIR}" failOnError="false" includeEmptyDirs="true" />
+    </target>
+
+    <target name="cleanup"
+        description="Cleans up old files.">
+        <delete dir="${BUILD_DIR}" failOnError="false" includeEmptyDirs="true" />
+    </target>
+
+</project>
