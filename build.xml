@@ -146,26 +146,26 @@
 		<delete file="${SRC_DIR}/FSMBuilder-app.xml" quiet="true"/>
 		<copy file="${ANT_DIR}/FSMBuilder-app.xml.template" tofile="${SRC_DIR}/FSMBuilder-app.xml" />
 		
-		<replace file="${SRC_DIR}/FSMBuilder-app.xml" value="build-release.number" propertyFile="${ANT_DIR}/version.properties">
-  			<replacefilter token="@build-release.number@" property="build-release.number"/>
-  			<replacefilter token="@build-release.number.total@" property="build-release.number.total"/>
-  			<replacefilter token="@build-release.date@" property="build-release.date"/>
-  			<replacefilter token="@build-release.major@" property="build-release.major"/>
-  			<replacefilter token="@build-release.minor@" property="build-release.minor"/>
-  			<replacefilter token="@build-release.state@" property="build-release.state"/>
+		<replace file="${SRC_DIR}/FSMBuilder-app.xml" value="${ANT_DIR}/version.properties" propertyFile="${ANT_DIR}/version.properties">
+  			<replacefilter token="@build.number@" property="build.number"/>
+  			<replacefilter token="@build.number.total@" property="build.number.total"/>
+  			<replacefilter token="@build.date@" property="build.date"/>
+  			<replacefilter token="@build.major@" property="build.major"/>
+  			<replacefilter token="@build.minor@" property="build.minor"/>
+  			<replacefilter token="@build.state@" property="build.state"/>
 		</replace>
 			
 		 <!-- update.xml > autoupdater file -->
 		<delete file="${UPDATER_DIR}/update.xml" quiet="true"/>
 		<copy file="${ANT_DIR}/update.xml.template" tofile="${UPDATER_DIR}/update.xml" />
 	
-		<replace file="${UPDATER_DIR}/update.xml" value="build-release.number" propertyFile="${ANT_DIR}/version.properties">
-  			<replacefilter token="@build-release.number@" property="build-release.number"/>
-  			<replacefilter token="@build-release.number.total@" property="build-release.number.total"/>
-  			<replacefilter token="@build-release.date@" property="build-release.date"/>
-  			<replacefilter token="@build-release.major@" property="build-release.major"/>
-  			<replacefilter token="@build-release.minor@" property="build-release.minor"/>
-  			<replacefilter token="@build-release.state@" property="build-release.state"/>
+		<replace file="${UPDATER_DIR}/update.xml" value="build.number" propertyFile="${ANT_DIR}/version.properties">
+			<replacefilter token="@build.number@" property="build.number"/>
+  			<replacefilter token="@build.number.total@" property="build.number.total"/>
+  			<replacefilter token="@build.date@" property="build.date"/>
+  			<replacefilter token="@build.major@" property="build.major"/>
+  			<replacefilter token="@build.minor@" property="build.minor"/>
+  			<replacefilter token="@build.state@" property="build.state"/>
 		</replace>
 					
 	</target>
