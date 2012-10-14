@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Build File" basedir="../" default="build">
+<project name="Build File" basedir="../" default="build-release">
 
     <!--location of property file -->
     <property file="${basedir}/ant/build.properties" description="your specific properities for builds" />
@@ -15,8 +15,8 @@
 
    -->
 
-    <target name="build" description="compiles application">
-		<echo message="build"/>
+    <target name="build-release" description="compiles application">
+		<echo message="build-release"/>
         <antcall target="init"/>
         <antcall target="package"/>
         <antcall target="cleanup"/>
@@ -29,7 +29,6 @@
         			output="${BUILD_DIR}/${APP_NAME}.swf"
     	            actionscript-file-encoding="UTF-8"
     	            keep-generated-actionscript="false"
-					target-player="10.0.0"
     	            incremental="true"
     	        >
     	            <!-- Get default compiler options. -->
@@ -135,38 +134,38 @@
 	<target name="injectVersion">
 		    
 		<propertyfile file="${ANT_DIR}/version.properties" comment="My properties">
-			<entry  key="build.state" value="beta"/>
-			<entry  key="build.major" type="int" value="0"/>
-			<entry  key="build.minor" type="int" value="1"/>
-			<entry  key="build.number" type="int" default="0" operation="+"/>
-			<entry  key="build.number.total" type="int" default="0" operation="+"/>
-			<entry  key="build.date" type="date" value="now" pattern="MMM dd yy hh:mm aa"/>
+			<entry  key="build-release.state" value="beta"/>
+			<entry  key="build-release.major" type="int" value="0"/>
+			<entry  key="build-release.minor" type="int" value="1"/>
+			<entry  key="build-release.number" type="int" default="0" operation="+"/>
+			<entry  key="build-release.number.total" type="int" default="0" operation="+"/>
+			<entry  key="build-release.date" type="date" value="now" pattern="MMM dd yy hh:mm aa"/>
 		</propertyfile>
 			
 		<!-- FSMBuilder-app.xml > app descriptor file -->
 		<delete file="${SRC_DIR}/FSMBuilder-app.xml" quiet="true"/>
 		<copy file="${ANT_DIR}/FSMBuilder-app.xml.template" tofile="${SRC_DIR}/FSMBuilder-app.xml" />
 		
-		<replace file="${SRC_DIR}/FSMBuilder-app.xml" value="build.number" propertyFile="${ANT_DIR}/version.properties">
-  			<replacefilter token="@build.number@" property="build.number"/>
-  			<replacefilter token="@build.number.total@" property="build.number.total"/>
-  			<replacefilter token="@build.date@" property="build.date"/>
-  			<replacefilter token="@build.major@" property="build.major"/>
-  			<replacefilter token="@build.minor@" property="build.minor"/>
-  			<replacefilter token="@build.state@" property="build.state"/>
+		<replace file="${SRC_DIR}/FSMBuilder-app.xml" value="build-release.number" propertyFile="${ANT_DIR}/version.properties">
+  			<replacefilter token="@build-release.number@" property="build-release.number"/>
+  			<replacefilter token="@build-release.number.total@" property="build-release.number.total"/>
+  			<replacefilter token="@build-release.date@" property="build-release.date"/>
+  			<replacefilter token="@build-release.major@" property="build-release.major"/>
+  			<replacefilter token="@build-release.minor@" property="build-release.minor"/>
+  			<replacefilter token="@build-release.state@" property="build-release.state"/>
 		</replace>
 			
 		 <!-- update.xml > autoupdater file -->
 		<delete file="${UPDATER_DIR}/update.xml" quiet="true"/>
 		<copy file="${ANT_DIR}/update.xml.template" tofile="${UPDATER_DIR}/update.xml" />
 	
-		<replace file="${UPDATER_DIR}/update.xml" value="build.number" propertyFile="${ANT_DIR}/version.properties">
-  			<replacefilter token="@build.number@" property="build.number"/>
-  			<replacefilter token="@build.number.total@" property="build.number.total"/>
-  			<replacefilter token="@build.date@" property="build.date"/>
-  			<replacefilter token="@build.major@" property="build.major"/>
-  			<replacefilter token="@build.minor@" property="build.minor"/>
-  			<replacefilter token="@build.state@" property="build.state"/>
+		<replace file="${UPDATER_DIR}/update.xml" value="build-release.number" propertyFile="${ANT_DIR}/version.properties">
+  			<replacefilter token="@build-release.number@" property="build-release.number"/>
+  			<replacefilter token="@build-release.number.total@" property="build-release.number.total"/>
+  			<replacefilter token="@build-release.date@" property="build-release.date"/>
+  			<replacefilter token="@build-release.major@" property="build-release.major"/>
+  			<replacefilter token="@build-release.minor@" property="build-release.minor"/>
+  			<replacefilter token="@build-release.state@" property="build-release.state"/>
 		</replace>
 					
 	</target>
