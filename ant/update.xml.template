@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?> 
-<update xmlns="http://ns.adobe.com/air/framework/update/description/2.5">
+<update xmlns="http://ns.adobe.com/air/framework/update/description/2.6">
 	<versionNumber>@build.major@.@build.minor@.@build.number@</versionNumber> 
 	<versionLabel>@build.major@.@build.minor@.@build.number@</versionLabel>
-	<url>https://github.com/matthewhare/fsmbuilder/raw/master/release/FSMBuilder.air</url>
+	<url>https://buildhive.cloudbees.com/job/matthewhare/job/fsmbuilder/ws/release/FSMBuilder.air</url>
 	<description><![CDATA[Autoupdater has been added]]></description> 
 </update>
