@@ -25,6 +25,34 @@
     <target name="compile"
         description="Compiles the AIR application to a SWF file and places SWF in a temp directory to be packaged.">
     	<echo message="compile"/>
+    	<mxmlc      file="${SOURCE_DIR}/${APP_NAME}.${APP_EXTENSION}"
+        			output="${BUILD_DIR}/${APP_NAME}.swf"
+    	            actionscript-file-encoding="UTF-8"
+    	            keep-generated-actionscript="false"
+					target-player="10.0.0"
+    	            incremental="true"
+    	        >
+    	            <!-- Get default compiler options. -->
+    				<load-config filename="${FLEX_HOME}/frameworks/air-config.xml"/>
+
+    	            <!-- List of path elements that form the roots of ActionScript
+    	            class hierarchies. -->
+    	            <source-path path-element="${FLEX_HOME}/frameworks"/>
+
+    	            <!-- List of SWC files or directories that contain SWC files. -->
+    	            <compiler.library-path dir="${FLEX_HOME}/frameworks" append="true">
+    	                <include name="libs" />
+    	            </compiler.library-path>
+					
+		            <compiler.library-path dir="${basedir}/libs" append="true">
+		                <include name="*.swc" />
+		            </compiler.library-path>
+
+    		        <!-- Set size of output SWF file. -->
+    	            <default-size width="1000" height="1000" />
+    	        </mxmlc>
+    	
+    	<!--
         <mxmlc file="${SOURCE_DIR}/${APP_NAME}.${APP_EXTENSION}"
             output="${BUILD_DIR}/${APP_NAME}.swf"
             locale="${LOCALE}"
@@ -38,7 +66,9 @@
             <source-path path-element="${SOURCE_DIR}"/>
             <external-library-path file="${FLEX_HOME}/frameworks/libs/air/airglobal.swc" append="true"/>
             <library-path dir="${LIBRARY_DIR}" includes="*.swc" append="true"/>
+            
         </mxmlc>
+            -->
     </target>
 
     <target name="certificate" unless="CERTIFICATE_FLAG">
