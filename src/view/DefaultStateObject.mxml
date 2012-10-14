@@ -181,10 +181,19 @@
 	
 	<!-- form -->
 	<s:VGroup width="100%" height="100%" top="10" left="10" right="10" bottom="7">
-		<s:HGroup verticalAlign="middle">
-		<s:Label id="stateNameLabel" width="100%" text="{vo.name}" includeIn="anchor,view" mouseEnabled="false"/>
-		<mx:LinkButton includeIn="anchor,view" label="+" click="addTransition(event)" width="20" height="20" paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0"/>
-		</s:HGroup>
+		<s:Group mouseChildren="false">
+			<s:HGroup verticalAlign="middle">
+			<s:Label id="stateNameLabel" width="100%" text="{vo.name}" includeIn="anchor,view"/>
+				<mx:LinkButton includeIn="anchor,view" label="+" click="addTransition(event)" width="20" height="20" paddingLeft="0" paddingRight="0" paddingTop="0" paddingBottom="0"/>
+			</s:HGroup>
+			<s:Label id="enteringGuardLabel" width="100%" text="{'-'+vo.enteringGuard}" includeInLayout="{(vo.enteringGuard)}" visible="{(vo.enteringGuard)}" includeIn="anchor,view"/>
+			<s:Label id="exitGuardLabel" width="100%" text="{'-'+vo.exitGuard}" includeInLayout="{(vo.exitGuard)}" visible="{(vo.exitGuard)}" includeIn="anchor,view"/>
+			<s:Label id="cancelledPhaseLabel" width="100%" text="{'-'+vo.cancelled}" includeInLayout="{(vo.cancelled)}" visible="{(vo.cancelled)}" includeIn="anchor,view"/>
+			<s:Label id="changedPhaseLabel" width="100%" text="{'-'+vo.changed}" includeInLayout="{(vo.changed)}" visible="{(vo.changed)}" includeIn="anchor,view"/>
+			<s:Label id="teardownPhaseLabel" width="100%" text="{'-'+vo.teardown}" includeInLayout="{(vo.teardown)}" visible="{(vo.teardown)}" includeIn="anchor,view"/>
+			<s:Label id="enteredPhaseLabel" width="100%" text="{'-'+vo.entered}" includeInLayout="{(vo.entered)}" visible="{(vo.entered)}" includeIn="anchor,view"/>
+		</s:Group>
+			
 		<s:HGroup includeIn="edit" width="100%" verticalAlign="middle">
 			<s:TextInput id="stateName" width="100%" change="voUpdate(event)" text="{vo.name}"/>
 		</s:HGroup>
