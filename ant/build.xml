@@ -61,13 +61,13 @@
     </target>
 
     <target name="package" 
-    	depends="compile, certificate"
+    	depends="compile, certificate, injectVersion"
         description="Packages the build SWF file from a temp directory.">
     	<echo message="package"/>
         <java jar="${ADT}" fork="true"
             failonerror="true"
             maxmemory="512m">
-            <arg value="-package"/>
+        	<arg value="-package"/>
             <arg value="-storetype"/>
             <arg value="${STORETYPE}"/>
             <arg value="-keystore"/>
@@ -79,6 +79,7 @@
             <arg value="-C"/>
             <arg value="${BUILD_DIR}"/>
             <arg value="${BUILD_DIR}/${APP_NAME}.swf"/>
+			
         </java>
     </target>
 
@@ -99,5 +100,45 @@
         description="Cleans up old files.">
         <delete dir="${BUILD_DIR}" failOnError="false" includeEmptyDirs="true" />
     </target>
+
+
+	<target name="injectVersion">
+		    
+		<propertyfile file="${ANT_DIR}/version.properties" comment="My properties">
+			<entry  key="build.state" value="beta"/>
+			<entry  key="build.major" type="int" value="0"/>
+			<entry  key="build.minor" type="int" value="1"/>
+			<entry  key="build.number" type="int" default="0" operation="+"/>
+			<entry  key="build.number.total" type="int" default="0" operation="+"/>
+			<entry  key="build.date" type="date" value="now" pattern="MMM dd yy hh:mm aa"/>
+		</propertyfile>
+			
+		<!-- FSMBuilder-app.xml > app descriptor file -->
+		<delete file="${SRC_DIR}/FSMBuilder-app.xml" quiet="true"/>
+		<copy file="${ANT_DIR}/FSMBuilder-app.xml.template" tofile="${SRC_DIR}/FSMBuilder-app.xml" />
+		
+		<replace file="${SRC_DIR}/FSMBuilder-app.xml" value="build.number" propertyFile="${ANT_DIR}/version.properties">
+  			<replacefilter token="@build.number@" property="build.number"/>
+  			<replacefilter token="@build.number.total@" property="build.number.total"/>
+  			<replacefilter token="@build.date@" property="build.date"/>
+  			<replacefilter token="@build.major@" property="build.major"/>
+  			<replacefilter token="@build.minor@" property="build.minor"/>
+  			<replacefilter token="@build.state@" property="build.state"/>
+		</replace>
+			
+		 <!-- update.xml > autoupdater file -->
+		<delete file="${UPDATER_DIR}/update.xml" quiet="true"/>
+		<copy file="${ANT_DIR}/update.xml.template" tofile="${UPDATER_DIR}/update.xml" />
+	
+		<replace file="${UPDATER_DIR}/update.xml" value="build.number" propertyFile="${ANT_DIR}/version.properties">
+  			<replacefilter token="@build.number@" property="build.number"/>
+  			<replacefilter token="@build.number.total@" property="build.number.total"/>
+  			<replacefilter token="@build.date@" property="build.date"/>
+  			<replacefilter token="@build.major@" property="build.major"/>
+  			<replacefilter token="@build.minor@" property="build.minor"/>
+  			<replacefilter token="@build.state@" property="build.state"/>
+		</replace>
+					
+	</target>
 
 </project>
