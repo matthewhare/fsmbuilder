@@ -7,33 +7,6 @@
     <!-- additional tasks -->
 	<taskdef resource="flexTasks.tasks" classpath="${FLEX_TASKS}" />
 
-	<!-- git support -->
-	<macrodef name = "git">
-	    <attribute name = "command" />
-	    <attribute name = "dir" default = "" />
-	    <element name = "args" optional = "true" />
-	    <sequential>
-	        <echo message = "git @{command}" />
-	        <exec executable = "git" dir = "@{dir}">
-	            <arg value = "@{command}" />
-	            <args/>
-	        </exec>
-	    </sequential>
-	</macrodef>
-	<macrodef name = "git-clone-pull">
-	    <attribute name = "repository" />
-	    <attribute name = "dest" />
-	    <sequential>
-	        <git command = "clone">
-	            <args>
-	                <arg value = "@{repository}" />
-	                <arg value = "@{dest}" />
-	            </args>
-	        </git>
-	        <git command = "pull" dir = "@{dest}" />
-	    </sequential>
-	</macrodef>
-	
 	
     <!--
 
@@ -45,10 +18,10 @@
 
     <target name="build-release" description="compiles application">
 		<echo message="build-release"/>
+    	<antcall target="getBuildNumber"/>
         <antcall target="init"/>
         <antcall target="package"/>
         <antcall target="cleanup"/>
-        <antcall target="git-push-update"/>
     </target>
 
     <target name="compile"
@@ -79,24 +52,6 @@
     		        <!-- Set size of output SWF file. -->
     	            <default-size width="1000" height="1000" />
     	        </mxmlc>
-    	
-    	<!--
-        <mxmlc file="${SOURCE_DIR}/${APP_NAME}.${APP_EXTENSION}"
-            output="${BUILD_DIR}/${APP_NAME}.swf"
-            locale="${LOCALE}"
-            static-rsls="true"
-            accessible="true"
-            configname="air"
-            debug="${DEBUG_FLAG}"
-            failonerror="true"
-            fork="true"
-            maxmemory="512m">
-            <source-path path-element="${SOURCE_DIR}"/>
-            <external-library-path file="${FLEX_HOME}/frameworks/libs/air/airglobal.swc" append="true"/>
-            <library-path dir="${LIBRARY_DIR}" includes="*.swc" append="true"/>
-            
-        </mxmlc>
-            -->
     </target>
 
     <target name="certificate" unless="CERTIFICATE_FLAG">
@@ -199,14 +154,21 @@
 					
 	</target>
 	
-	<target name="git-push-update">
-		<git command = "commit">
-            <args>
-                <arg value = "-m" />
-                <arg value = "'release version bump'" />
-                <arg value = "${UPDATER_DIR}/update.xml" />
-            </args>
-        </git>
+	<target name="getBuildNumber">
+		<exec executable="git" outputproperty="BUILD_NUMBER">
+		  <arg value="describe"/>
+		  <arg value="--match"/>
+		  <arg value="build"/>
+		  <redirector>
+		    <outputfilterchain>
+		      <tokenfilter>
+		        <replaceregex pattern="^[^-]+-" replace=""/>
+		        <replaceregex pattern="-.+$" replace=""/>
+		      </tokenfilter>
+		   </outputfilterchain>
+		 </redirector>
+		</exec>
+		<echo message="version ${BUILD_NUMBER}"/>
 	</target>
 
 </project>
