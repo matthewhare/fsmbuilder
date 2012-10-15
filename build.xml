@@ -15,34 +15,17 @@
 
 
    -->
-
+	
     <target name="build-release" description="compiles application">
 		<echo message="build-release"/>
-        <antcall target="getBuildInfo"/>
         <antcall target="init"/>
         <antcall target="package"/>
         <antcall target="cleanup"/>
     </target>
-
-	<target name="getBuildInfo">
-		<exec executable="bash" outputproperty="git.commit">
-		    <arg value="-c"/>
-		    <arg value="git rev-list --all | wc -l"/>
-	  	</exec>
-		<exec executable="git" outputproperty="git.tagstring">
-	      <arg value="describe"/>
-	    </exec>
-	    <exec executable="git" outputproperty="git.revision">
-	      <arg value="rev-parse"/>
-	      <arg value="HEAD"/>
-	    </exec>
-		<echo message="git.commit = ${git.commit} ${git.tagstring} ${git.revision}"/>
-	</target>
 	
     <target name="compile"
         description="Compiles the AIR application to a SWF file and places SWF in a temp directory to be packaged.">
     	<echo message="compile"/>
-    	<echo message="BUILD_REVISION = ${BUILD_REVISION}"/>
     	<mxmlc      file="${SOURCE_DIR}/${APP_NAME}.${APP_EXTENSION}"
         			output="${BUILD_DIR}/${APP_NAME}.swf"
     	            actionscript-file-encoding="UTF-8"
@@ -132,12 +115,26 @@
 
 
 	<target name="injectVersion">
-		    
+		   
+		<exec executable="bash" output="${ANT_DIR}/version.properties" outputproperty="git.commit">
+		    <arg value="-c"/>
+		    <arg value="git rev-list --all | wc -l"/>
+	  	</exec>
+		<exec executable="git" outputproperty="git.tagstring">
+	      <arg value="describe"/>
+	    </exec>
+	    <exec executable="git" outputproperty="git.revision">
+	      <arg value="rev-parse"/>
+	      <arg value="HEAD"/>
+	    </exec>
+
+		<echo message="git.commit = ${git.commit} ${git.tagstring} ${git.revision}"/>
+
 		<propertyfile file="${ANT_DIR}/version.properties" comment="My properties">
 			<entry  key="build.state" value="beta"/>
 			<entry  key="build.major" type="int" value="0"/>
 			<entry  key="build.minor" type="int" value="1"/>
-			<entry  key="build.number" type="int" value="${BUILD_REVISION}"/>
+			<entry  key="build.number" type="int" value="${git.commit}"/>
 			<entry  key="build.number.total" type="int" default="0" operation="+"/>
 			<entry  key="build.date" type="date" value="now" pattern="MMM dd yy hh:mm aa"/>
 		</propertyfile>
@@ -147,7 +144,7 @@
 		<copy file="${ANT_DIR}/FSMBuilder-app.xml.template" tofile="${SRC_DIR}/FSMBuilder-app.xml" />
 		
 		<replace file="${SRC_DIR}/FSMBuilder-app.xml" value="${ANT_DIR}/version.properties" propertyFile="${ANT_DIR}/version.properties">
-  			<replacefilter token="@build.number@" value="${git.commit}"/>
+  			<replacefilter token="@build.number@" proerty="build.name"/>
   			<replacefilter token="@build.number.total@" property="build.number.total"/>
   			<replacefilter token="@build.date@" property="build.date"/>
   			<replacefilter token="@build.major@" property="build.major"/>
@@ -160,7 +157,7 @@
 		<copy file="${ANT_DIR}/update.xml.template" tofile="${UPDATER_DIR}/update.xml" />
 	
 		<replace file="${UPDATER_DIR}/update.xml" value="build.number" propertyFile="${ANT_DIR}/version.properties">
-			<replacefilter token="@build.number@" value="${git.commit}"/>
+			<replacefilter token="@build.number@" value="build.name"/>
   			<replacefilter token="@build.number.total@" property="build.number.total"/>
   			<replacefilter token="@build.date@" property="build.date"/>
   			<replacefilter token="@build.major@" property="build.major"/>
