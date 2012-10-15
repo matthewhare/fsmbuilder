@@ -137,7 +137,7 @@
 			<entry  key="build.state" value="beta"/>
 			<entry  key="build.major" type="int" value="0"/>
 			<entry  key="build.minor" type="int" value="1"/>
-			<entry  key="build.number" type="int" value="${git.commit}"/>
+			<entry  key="build.number" type="string" value="${git.commit}"/>
 			<entry  key="build.number.total" type="int" default="0" operation="+"/>
 			<entry  key="build.date" type="date" value="now" pattern="MMM dd yy hh:mm aa"/>
 		</propertyfile>
