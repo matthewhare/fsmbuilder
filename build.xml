@@ -26,7 +26,7 @@
 
 	<target name="getBuildNumber">
 		<exec executable="git" outputproperty="BUILD_NUMBER">
-		  <arg value="git shortlog | grep -E '^[ ]+\w+' | wc -l"/>
+		  <arg value="shortlog | grep -E '^[ ]+\w+' | wc -l"/>
 		</exec>
 		<echo message="BUILD_NUMBER = ${BUILD_NUMBER}"/>
 	</target>
