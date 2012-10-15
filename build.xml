@@ -18,13 +18,13 @@
 
     <target name="build-release" description="compiles application">
 		<echo message="build-release"/>
-        <antcall target="getBuildNumber"/>
+        <antcall target="getBuildInfo"/>
         <antcall target="init"/>
         <antcall target="package"/>
         <antcall target="cleanup"/>
     </target>
 
-	<target name="getBuildNumber">
+	<target name="getBuildInfo">
 		<exec executable="bash" outputproperty="git.commit">
 		    <arg value="-c"/>
 		    <arg value="git rev-list --all | wc -l"/>
@@ -36,13 +36,14 @@
 	      <arg value="rev-parse"/>
 	      <arg value="HEAD"/>
 	    </exec>
+		<property id="BUILD_REVISION" value="${git.commit}"/>
 		<echo message="git.commit = ${git.commit} ${git.tagstring} ${git.revision}"/>
 	</target>
 	
     <target name="compile"
         description="Compiles the AIR application to a SWF file and places SWF in a temp directory to be packaged.">
     	<echo message="compile"/>
-    	<echo message="git.commit = ${git.commit}"/>
+    	<echo message="BUILD_REVISION = ${BUILD_REVISION}"/>
     	<mxmlc      file="${SOURCE_DIR}/${APP_NAME}.${APP_EXTENSION}"
         			output="${BUILD_DIR}/${APP_NAME}.swf"
     	            actionscript-file-encoding="UTF-8"
@@ -137,7 +138,7 @@
 			<entry  key="build.state" value="beta"/>
 			<entry  key="build.major" type="int" value="0"/>
 			<entry  key="build.minor" type="int" value="1"/>
-			<entry  key="build.number" type="int" value="${git.commit}"/>
+			<entry  key="build.number" type="int" value="${BUILD_REVISION}"/>
 			<entry  key="build.number.total" type="int" default="0" operation="+"/>
 			<entry  key="build.date" type="date" value="now" pattern="MMM dd yy hh:mm aa"/>
 		</propertyfile>
