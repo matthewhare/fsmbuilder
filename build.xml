@@ -26,7 +26,17 @@
 
 	<target name="getBuildNumber">
 		<exec executable="git" outputproperty="git.commit">
-		  <arg value="shortlog | grep -E '^[ ]+\w+' | wc -l"/>
+		<arg value="describe"/>
+		  <arg value="--match"/>
+		  <arg value="build"/>
+		  <redirector>
+		    <outputfilterchain>
+		      <tokenfilter>
+		        <replaceregex pattern="^[^-]+-" replace=""/>
+		        <replaceregex pattern="-.+$" replace=""/>
+		      </tokenfilter>
+		   </outputfilterchain>
+		 </redirector>
 		</exec>
 		<exec executable="git" outputproperty="git.tagstring">
 	      <arg value="describe"/>
