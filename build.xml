@@ -35,7 +35,14 @@
 		  <arg value="wc"/>
 		  <arg value="-l"/>
 		</exec>
-		<echo message="BUILD_NUMBER = ${BUILD_NUMBER}"/>
+		<exec executable="git" outputproperty="git.tagstring">
+	      <arg value="describe"/>
+	    </exec>
+	    <exec executable="git" outputproperty="git.revision">
+	      <arg value="rev-parse"/>
+	      <arg value="HEAD"/>
+	    </exec>
+		<echo message="BUILD_NUMBER = ${BUILD_NUMBER} ${git.tagstring} ${git.revision}"/>
 	</target>
 	
     <target name="compile"
