@@ -25,7 +25,7 @@
     </target>
 
 	<target name="getBuildNumber">
-		<exec executable="git" outputproperty="BUILD_NUMBER">
+		<exec executable="git" outputproperty="git.commit">
 		  <arg value="shortlog"/>
 		  <arg value="|"/>
 		  <arg value="grep"/>
@@ -42,7 +42,7 @@
 	      <arg value="rev-parse"/>
 	      <arg value="HEAD"/>
 	    </exec>
-		<echo message="BUILD_NUMBER = ${BUILD_NUMBER} ${git.tagstring} ${git.revision}"/>
+		<echo message="BUILD_NUMBER = ${git.commit} ${git.tagstring} ${git.revision}"/>
 	</target>
 	
     <target name="compile"
