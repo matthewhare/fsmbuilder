@@ -18,7 +18,7 @@
 
     <target name="build-release" description="compiles application">
 		<echo message="build-release"/>
-    	<antcall target="getBuildNumber"/>
+    	
         <antcall target="init"/>
         <antcall target="package"/>
         <antcall target="cleanup"/>
@@ -118,12 +118,12 @@
 	<target name="injectVersion">
 		    
 		<propertyfile file="${ANT_DIR}/version.properties" comment="My properties">
-			<entry  key="build-release.state" value="beta"/>
-			<entry  key="build-release.major" type="int" value="0"/>
-			<entry  key="build-release.minor" type="int" value="1"/>
-			<entry  key="build-release.number" type="int" default="0" operation="+"/>
-			<entry  key="build-release.number.total" type="int" default="0" operation="+"/>
-			<entry  key="build-release.date" type="date" value="now" pattern="MMM dd yy hh:mm aa"/>
+			<entry  key="build.state" value="beta"/>
+			<entry  key="build.major" type="int" value="0"/>
+			<entry  key="build.minor" type="int" value="1"/>
+			<entry  key="build.number" type="int" default="0" operation="+"/>
+			<entry  key="build.number.total" type="int" default="0" operation="+"/>
+			<entry  key="build.date" type="date" value="now" pattern="MMM dd yy hh:mm aa"/>
 		</propertyfile>
 			
 		<!-- FSMBuilder-app.xml > app descriptor file -->
