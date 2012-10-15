@@ -24,7 +24,6 @@ package utils.autoupdate
 		{ 
 			setApplicationVersion(); 
 			// we set the URL for the update.xml file 
-//			https://raw.github.com/matthewhare/fsmbuilder/master/updater/update.xml
 			appUpdater.updateURL = "https://buildhive.cloudbees.com/job/matthewhare/job/fsmbuilder/ws/updater/update.xml"; 
 			//we set the event handlers for INITIALIZED nad ERROR 
 			appUpdater.addEventListener(UpdateEvent.INITIALIZED, onUpdate); 
