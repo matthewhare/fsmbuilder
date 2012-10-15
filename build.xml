@@ -18,12 +18,29 @@
 
     <target name="build-release" description="compiles application">
 		<echo message="build-release"/>
-    	
+        <antcall target="getBuildNumber"/>
         <antcall target="init"/>
         <antcall target="package"/>
         <antcall target="cleanup"/>
     </target>
 
+	<target name="getBuildNumber">
+		<exec executable="git" outputproperty="BUILD_NUMBER">
+		  <arg value="describe"/>
+		  <arg value="--match"/>
+		  <arg value="build"/>
+		  <redirector>
+		    <outputfilterchain>
+		      <tokenfilter>
+		        <replaceregex pattern="^[^-]+-" replace=""/>
+		        <replaceregex pattern="-.+$" replace=""/>
+		      </tokenfilter>
+		   </outputfilterchain>
+		 </redirector>
+		</exec>
+		<echo message="BUILD_NUMBER = ${BUILD_NUMBER}"/>
+	</target>
+	
     <target name="compile"
         description="Compiles the AIR application to a SWF file and places SWF in a temp directory to be packaged.">
     	<echo message="compile"/>
