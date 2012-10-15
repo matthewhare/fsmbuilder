@@ -36,7 +36,6 @@
 	      <arg value="rev-parse"/>
 	      <arg value="HEAD"/>
 	    </exec>
-		<property id="BUILD_REVISION" value="${git.commit}"/>
 		<echo message="git.commit = ${git.commit} ${git.tagstring} ${git.revision}"/>
 	</target>
 	
@@ -148,7 +147,7 @@
 		<copy file="${ANT_DIR}/FSMBuilder-app.xml.template" tofile="${SRC_DIR}/FSMBuilder-app.xml" />
 		
 		<replace file="${SRC_DIR}/FSMBuilder-app.xml" value="${ANT_DIR}/version.properties" propertyFile="${ANT_DIR}/version.properties">
-  			<replacefilter token="@build.number@" property="build.number"/>
+  			<replacefilter token="@build.number@" value="${git.commit}"/>
   			<replacefilter token="@build.number.total@" property="build.number.total"/>
   			<replacefilter token="@build.date@" property="build.date"/>
   			<replacefilter token="@build.major@" property="build.major"/>
@@ -161,7 +160,7 @@
 		<copy file="${ANT_DIR}/update.xml.template" tofile="${UPDATER_DIR}/update.xml" />
 	
 		<replace file="${UPDATER_DIR}/update.xml" value="build.number" propertyFile="${ANT_DIR}/version.properties">
-			<replacefilter token="@build.number@" property="build.number"/>
+			<replacefilter token="@build.number@" value="${git.commit}"/>
   			<replacefilter token="@build.number.total@" property="build.number.total"/>
   			<replacefilter token="@build.date@" property="build.date"/>
   			<replacefilter token="@build.major@" property="build.major"/>
