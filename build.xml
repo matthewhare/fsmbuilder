@@ -25,19 +25,10 @@
     </target>
 
 	<target name="getBuildNumber">
-		<exec executable="git" outputproperty="git.commit">
-		<arg value="describe"/>
-		  <arg value="--match"/>
-		  <arg value="build"/>
-		  <redirector>
-		    <outputfilterchain>
-		      <tokenfilter>
-		        <replaceregex pattern="^[^-]+-" replace=""/>
-		        <replaceregex pattern="-.+$" replace=""/>
-		      </tokenfilter>
-		   </outputfilterchain>
-		 </redirector>
-		</exec>
+		<exec executable="bash" outputproperty="git.commit">
+		    <arg value="-c"/>
+		    <arg value="git rev-list --all | wc -l"/>
+	  	</exec>
 		<exec executable="git" outputproperty="git.tagstring">
 	      <arg value="describe"/>
 	    </exec>
@@ -45,7 +36,7 @@
 	      <arg value="rev-parse"/>
 	      <arg value="HEAD"/>
 	    </exec>
-		<echo message="BUILD_NUMBER = ${git.commit} ${git.tagstring} ${git.revision}"/>
+		<echo message="git.commit = ${git.commit} ${git.tagstring} ${git.revision}"/>
 	</target>
 	
     <target name="compile"
