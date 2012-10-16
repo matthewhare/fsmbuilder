@@ -74,8 +74,11 @@ package utils.autoupdate
 				case StatusUpdateEvent.UPDATE_STATUS:
 					versionString = "checking for updates..";
 					break;
+				case StatusFileUpdateErrorEvent.FILE_UPDATE_ERROR:
+				case DownloadErrorEvent.DOWNLOAD_ERROR:
+				case ErrorEvent.ERROR:
 				case StatusUpdateErrorEvent.UPDATE_ERROR:
-					versionString = appUpdater.currentVersion + "(error)";
+					versionString = appUpdater.currentVersion + "(error:"+event.type+")";
 					break;
 				case UpdateEvent.DOWNLOAD_START:
 					versionString = "downloading updates.."
