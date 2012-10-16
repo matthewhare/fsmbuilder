@@ -1,6 +1,14 @@
 package utils.autoupdate
 {
+	import air.update.events.DownloadErrorEvent;
+	import air.update.events.StatusFileUpdateErrorEvent;
+	import air.update.events.StatusFileUpdateEvent;
+	import air.update.events.StatusUpdateErrorEvent;
+	import air.update.events.StatusUpdateEvent;
+	
 	import flash.desktop.NativeApplication;
+	import flash.events.Event;
+	import flash.events.ProgressEvent;
 
 	public class AutoUpdater
 	{
@@ -14,7 +22,7 @@ package utils.autoupdate
 		import flash.events.ErrorEvent; 
 		import air.update.ApplicationUpdaterUI; /** * @var the object that that handles the update related actions */ 
 		
-		private var appUpdater:ApplicationUpdaterUI = new ApplicationUpdaterUI(); 
+		static public var appUpdater:ApplicationUpdaterUI = new ApplicationUpdaterUI(); 
 		
 		/** This function is triggered when the application finished to load; 
 		 * Here we initialize <code>appUpdater</code> and set some properties 
@@ -22,13 +30,28 @@ package utils.autoupdate
 		
 		private function checkUpdate():void 
 		{ 
-			setApplicationVersion(); 
+
 			// we set the URL for the update.xml file 
 //			https://raw.github.com/matthewhare/fsmbuilder/master/updater/update.xml
 			appUpdater.updateURL = "https://buildhive.cloudbees.com/job/matthewhare/job/fsmbuilder/ws/updater/update.xml"; 
 			//we set the event handlers for INITIALIZED nad ERROR 
 			appUpdater.addEventListener(UpdateEvent.INITIALIZED, onUpdate);
-			appUpdater.addEventListener(ErrorEvent.ERROR, onError); 
+			
+			appUpdater.addEventListener(UpdateEvent.CHECK_FOR_UPDATE, eventHandler)
+			appUpdater.addEventListener(UpdateEvent.BEFORE_INSTALL, eventHandler)
+			appUpdater.addEventListener(UpdateEvent.DOWNLOAD_COMPLETE, eventHandler)
+			appUpdater.addEventListener(UpdateEvent.DOWNLOAD_START, eventHandler)
+				
+			appUpdater.addEventListener(ProgressEvent.PROGRESS, eventHandler);
+			appUpdater.addEventListener(StatusUpdateEvent.UPDATE_STATUS, eventHandler);
+			appUpdater.addEventListener(StatusFileUpdateEvent.FILE_UPDATE_STATUS, eventHandler)
+
+			// ERRORS
+				
+			appUpdater.addEventListener(StatusFileUpdateErrorEvent.FILE_UPDATE_ERROR, eventHandler)
+			appUpdater.addEventListener(DownloadErrorEvent.DOWNLOAD_ERROR, eventHandler)
+			appUpdater.addEventListener(ErrorEvent.ERROR, eventHandler); 
+			appUpdater.addEventListener(StatusUpdateErrorEvent.UPDATE_ERROR, eventHandler)
 			//we can hide the dialog asking for permission for checking for a new update;
 			//if you want to see it just leave the default value (or set true).
 			appUpdater.isCheckForUpdateVisible = true; 
@@ -38,6 +61,24 @@ package utils.autoupdate
 			appUpdater.isInstallUpdateVisible = true; 
 			//we initialize the updater 
 			appUpdater.initialize(); 
+		}
+
+		private function eventHandler(event:Event):void
+		{
+			trace("AutoUpdate::event type ["+event.type+"]");
+			AutoUpdater.versionString = event.type;
+			switch (event.type)
+			{
+				case StatusUpdateEvent.UPDATE_STATUS:
+					break;
+				case StatusUpdateErrorEvent.UPDATE_ERROR:
+					break;
+				case UpdateEvent.DOWNLOAD_COMPLETE:
+					versionString = appUpdater.currentVersion;
+					break;
+			}
+			
+			
 		} 
 		
 		/** 
@@ -49,7 +90,8 @@ package utils.autoupdate
 		private function onUpdate(event:UpdateEvent):void 
 		{ 
 			//start the process of checking for a new update and to install 
-			AutoUpdater.version = "checking.."
+			AutoUpdater.versionString = appUpdater.currentVersion;
+			appUpdater.updateDescriptor
 			appUpdater.checkNow(); 
 		}
 		
@@ -59,22 +101,12 @@ package utils.autoupdate
 		 * */ 
 		private function onError(event:ErrorEvent):void 
 		{ 
-			AutoUpdater.version = "error : " + event.toString()
+			AutoUpdater.versionString = "error : " + event.toString()
 //			Alert.show(event.toString()); 
 		} 
-		
-		/** 
-		 * * A simple code just to read the current version of the application 
-		 * * and display it in a label. 
-		 * */ 
-		private function setApplicationVersion():void 
-		{ 
-			var appXML:XML = NativeApplication.nativeApplication.applicationDescriptor; 
-			var ns:Namespace = appXML.namespace(); 
-			AutoUpdater.version = "v:" + appXML.ns::version; 
-		} 
+
 		
 		[Bindable]
-		static public var version:String = "..";
+		static public var versionString:String = "..";
 	}
 }
