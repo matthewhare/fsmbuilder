@@ -36,6 +36,7 @@ package utils.autoupdate
 			appUpdater.updateURL = "https://buildhive.cloudbees.com/job/matthewhare/job/fsmbuilder/ws/updater/update.xml"; 
 			//we set the event handlers for INITIALIZED nad ERROR 
 			appUpdater.addEventListener(UpdateEvent.INITIALIZED, onUpdate);
+			appUpdater.addEventListener(Event.DEACTIVATE, eventHandler);
 			
 			appUpdater.addEventListener(UpdateEvent.CHECK_FOR_UPDATE, eventHandler)
 			appUpdater.addEventListener(UpdateEvent.BEFORE_INSTALL, eventHandler)
@@ -72,7 +73,7 @@ package utils.autoupdate
 					
 					break;
 				case StatusUpdateEvent.UPDATE_STATUS:
-					versionString = "checking for updates..";
+					versionString = appUpdater.currentVersion;
 					break;
 				case StatusFileUpdateErrorEvent.FILE_UPDATE_ERROR:
 				case DownloadErrorEvent.DOWNLOAD_ERROR:
@@ -100,8 +101,7 @@ package utils.autoupdate
 		private function onUpdate(event:UpdateEvent):void 
 		{ 
 			//start the process of checking for a new update and to install 
-			AutoUpdater.versionString = appUpdater.currentVersion;
-			appUpdater.updateDescriptor
+			versionString = "checking for updates..";
 			appUpdater.checkNow(); 
 		}
 		
