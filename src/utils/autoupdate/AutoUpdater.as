@@ -66,12 +66,18 @@ package utils.autoupdate
 		private function eventHandler(event:Event):void
 		{
 			trace("AutoUpdate::event type ["+event.type+"]");
-			AutoUpdater.versionString = event.type;
 			switch (event.type)
 			{
+				case UpdateEvent.CHECK_FOR_UPDATE:
+					versionString = "checking for updates.."
+					break:
 				case StatusUpdateEvent.UPDATE_STATUS:
 					break;
 				case StatusUpdateErrorEvent.UPDATE_ERROR:
+					versionString = appUpdater.currentVersion + "(error)";
+					break;
+				case UpdateEvent.DOWNLOAD_START:
+					versionString = "downloading updates.."
 					break;
 				case UpdateEvent.DOWNLOAD_COMPLETE:
 					versionString = appUpdater.currentVersion;
