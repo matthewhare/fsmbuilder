@@ -24,17 +24,18 @@ package utils.autoupdate
 		{ 
 			setApplicationVersion(); 
 			// we set the URL for the update.xml file 
+//			https://raw.github.com/matthewhare/fsmbuilder/master/updater/update.xml
 			appUpdater.updateURL = "https://buildhive.cloudbees.com/job/matthewhare/job/fsmbuilder/ws/updater/update.xml"; 
 			//we set the event handlers for INITIALIZED nad ERROR 
-			appUpdater.addEventListener(UpdateEvent.INITIALIZED, onUpdate); 
+			appUpdater.addEventListener(UpdateEvent.INITIALIZED, onUpdate);
 			appUpdater.addEventListener(ErrorEvent.ERROR, onError); 
 			//we can hide the dialog asking for permission for checking for a new update;
 			//if you want to see it just leave the default value (or set true).
-			appUpdater.isCheckForUpdateVisible = false; 
+			appUpdater.isCheckForUpdateVisible = true; 
 			//if isFileUpdateVisible is set to true, File Update, File No Update, //
 			// and File Error dialog boxes will be displayed appUpdater.isFileUpdateVisible = false; 
 			//if isInstallUpdateVisible is set to true, the dialog box for installing the update is visible 
-			appUpdater.isInstallUpdateVisible = false; 
+			appUpdater.isInstallUpdateVisible = true; 
 			//we initialize the updater 
 			appUpdater.initialize(); 
 		} 
