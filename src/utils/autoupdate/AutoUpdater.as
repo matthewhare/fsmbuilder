@@ -69,8 +69,8 @@ package utils.autoupdate
 			switch (event.type)
 			{
 				case UpdateEvent.CHECK_FOR_UPDATE:
-					versionString = "checking for updates.."
-					break:
+					versionString = "checking for updates..";
+					break;
 				case StatusUpdateEvent.UPDATE_STATUS:
 					break;
 				case StatusUpdateErrorEvent.UPDATE_ERROR:
