@@ -54,11 +54,11 @@ package utils.autoupdate
 			appUpdater.addEventListener(StatusUpdateErrorEvent.UPDATE_ERROR, eventHandler)
 			//we can hide the dialog asking for permission for checking for a new update;
 			//if you want to see it just leave the default value (or set true).
-			appUpdater.isCheckForUpdateVisible = true; 
+			appUpdater.isCheckForUpdateVisible = false; 
 			//if isFileUpdateVisible is set to true, File Update, File No Update, //
 			// and File Error dialog boxes will be displayed appUpdater.isFileUpdateVisible = false; 
 			//if isInstallUpdateVisible is set to true, the dialog box for installing the update is visible 
-			appUpdater.isInstallUpdateVisible = true; 
+			appUpdater.isInstallUpdateVisible = false; 
 			//we initialize the updater 
 			appUpdater.initialize(); 
 		}
@@ -69,9 +69,10 @@ package utils.autoupdate
 			switch (event.type)
 			{
 				case UpdateEvent.CHECK_FOR_UPDATE:
-					versionString = "checking for updates..";
+					
 					break;
 				case StatusUpdateEvent.UPDATE_STATUS:
+					versionString = "checking for updates..";
 					break;
 				case StatusUpdateErrorEvent.UPDATE_ERROR:
 					versionString = appUpdater.currentVersion + "(error)";

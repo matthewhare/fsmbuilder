@@ -76,7 +76,7 @@
 						
 					</view:Diagram>
 				</s:HGroup>
-				<s:Label id="currentVersion" text="{AutoUpdater.versionString}" bottom="0" left="0"/>
+				<s:Label id="currentVersion" text="{AutoUpdater.versionString}" bottom="0" right="0"/>
 			</s:NavigatorContent>
 			
 			<s:NavigatorContent id="outputContent" label="ActionScript">
