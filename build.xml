@@ -138,11 +138,11 @@
 	  	</exec>
 		
 
-		<echo message=" - git.commit[${git.commit}]"/>
 		<echo message=" - git.describe[${git.describe}]"/>
 		<echo message=" - git.tag[${git.tag}]"/>
 		<echo message=" - git.revision[${git.revision}]"/>
 		<echo message=" - git.revision-total[${git.revision-total}]"/>
+		<echo message=" - git.description[${git.description}]"/>
 
 		<propertyfile file="${ANT_DIR}/version.properties" comment="My properties">
 			<entry  key="build.date" type="date" value="now" pattern="MMM dd yy hh:mm aa"/>
