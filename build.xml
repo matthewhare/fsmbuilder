@@ -141,6 +141,7 @@
 			<entry  key="build.number" type="int" value="${git.commit}"/>
 			<entry  key="build.number.total" type="int" default="0" operation="+"/>
 			<entry  key="build.date" type="date" value="now" pattern="MMM dd yy hh:mm aa"/>
+			<entry  key="build.description" type="string" value="${git.history}"/>
 			
 		</propertyfile>
 			
@@ -168,7 +169,7 @@
   			<replacefilter token="@build.major@" property="build.major"/>
   			<replacefilter token="@build.minor@" property="build.minor"/>
   			<replacefilter token="@build.state@" property="build.state"/>
-  			<replacefilter token="@build.description@" property="${git.history}"/>
+  			<replacefilter token="@build.description@" property="build.description"/>
 		</replace>
 					
 	</target>
