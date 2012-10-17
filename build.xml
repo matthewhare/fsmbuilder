@@ -137,7 +137,6 @@
 		    <arg value="git rev-list --all | wc -l"/>
 	  	</exec>
 		
-
 		<echo message=" - git.describe[${git.describe}]"/>
 		<echo message=" - git.tag[${git.tag}]"/>
 		<echo message=" - git.revision[${git.revision}]"/>
