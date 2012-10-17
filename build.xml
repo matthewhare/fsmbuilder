@@ -116,33 +116,36 @@
 
 	<target name="injectVersion">
 		   
-		<exec executable="bash" output="${ANT_DIR}/version.properties" outputproperty="git.commit">
+		<exec executable="bash" output="${ANT_DIR}/version.properties" outputproperty="git.description">
+		    <arg value="-c"/>
+		    <arg value="git log `git describe --tags --abbrev=0`..HEAD --oneline"/>
+	  	</exec>
+		<exec executable="bash" output="${ANT_DIR}/version.properties" outputproperty="git.describe">
+		    <arg value="-c"/>
+		    <arg value="git describe"/>
+	  	</exec>
+		<exec executable="bash" output="${ANT_DIR}/version.properties" outputproperty="git.tag">
+		    <arg value="-c"/>
+		    <arg value="git tag -l"/>
+	  	</exec>
+		<exec executable="bash" output="${ANT_DIR}/version.properties" outputproperty="git.revision">
+		    <arg value="-c"/>
+		    <arg value="git log `git describe --tags --abbrev=0`..HEAD --oneline | wc -l"/>
+	  	</exec>
+		<exec executable="bash" output="${ANT_DIR}/version.properties" outputproperty="git.revision-total">
 		    <arg value="-c"/>
 		    <arg value="git rev-list --all | wc -l"/>
 	  	</exec>
-		<exec executable="bash" output="${ANT_DIR}/version.properties" outputproperty="git.history">
-		    <arg value="-c"/>
-		    <arg value="git log --pretty=format:' - (%ar) %s/'"/>
-	  	</exec>
-		<exec executable="git" output="${ANT_DIR}/version.properties" outputproperty="git.tagstring">
-	      <arg value="describe"/>
-	    </exec>
-	    <exec executable="git" output="${ANT_DIR}/version.properties" outputproperty="git.revision">
-	      <arg value="rev-parse"/>
-	      <arg value="HEAD"/>
-	    </exec>
+		
 
-		<echo message="git.commit = ${git.commit} ${git.history}"/>
+		<echo message=" - git.commit[${git.commit}] \n - git.tagstring[${git.tag}] \n - git.revision[${git.revision}] \n - git.revision-total[${git.revision-total}]"/>
 
 		<propertyfile file="${ANT_DIR}/version.properties" comment="My properties">
-			<entry  key="build.state" value="beta"/>
-			<entry  key="build.major" type="int" value="0"/>
-			<entry  key="build.minor" type="int" value="1"/>
-			<entry  key="build.number" type="int" value="${git.commit}"/>
-			<entry  key="build.number.total" type="int" default="0" operation="+"/>
 			<entry  key="build.date" type="date" value="now" pattern="MMM dd yy hh:mm aa"/>
-			<entry  key="build.description" type="string" value="${git.history}"/>
-			
+			<entry  key="git.description" type="string" value="${git.description}"/>
+			<entry  key="git.tag" type="string" value="${git.tag}"/>
+			<entry  key="git.revision" type="string" value="${git.revision}"/>
+			<entry  key="git.revision-total" type="string" value="${git.revision-total}"/>
 		</propertyfile>
 			
 		<!-- FSMBuilder-app.xml > app descriptor file -->
@@ -150,12 +153,11 @@
 		<copy file="${ANT_DIR}/FSMBuilder-app.xml.template" tofile="${SRC_DIR}/FSMBuilder-app.xml" />
 		
 		<replace file="${SRC_DIR}/FSMBuilder-app.xml" value="${ANT_DIR}/version.properties" propertyFile="${ANT_DIR}/version.properties">
-  			<replacefilter token="@build.number@" property="build.number"/>
-  			<replacefilter token="@build.number.total@" property="build.number.total"/>
   			<replacefilter token="@build.date@" property="build.date"/>
-  			<replacefilter token="@build.major@" property="build.major"/>
-  			<replacefilter token="@build.minor@" property="build.minor"/>
-  			<replacefilter token="@build.state@" property="build.state"/>
+  			<replacefilter token="@git.description@" property="git.description"/>
+  			<replacefilter token="@git.tag@" property="git.tag"/>
+  			<replacefilter token="@git.revision@" property="git.revision"/>
+  			<replacefilter token="@git.revision-total@" property="git.revision-total"/>
 		</replace>
 			
 		 <!-- update.xml > autoupdater file -->
@@ -163,13 +165,11 @@
 		<copy file="${ANT_DIR}/update.xml.template" tofile="${UPDATER_DIR}/update.xml" />
 	
 		<replace file="${UPDATER_DIR}/update.xml" value="build.number" propertyFile="${ANT_DIR}/version.properties">
-			<replacefilter token="@build.number@" property="build.number"/>
-  			<replacefilter token="@build.number.total@" property="build.number.total"/>
-  			<replacefilter token="@build.date@" property="build.date"/>
-  			<replacefilter token="@build.major@" property="build.major"/>
-  			<replacefilter token="@build.minor@" property="build.minor"/>
-  			<replacefilter token="@build.state@" property="build.state"/>
-  			<replacefilter token="@build.description@" property="build.description"/>
+			<replacefilter token="@build.date@" property="build.date"/>
+  			<replacefilter token="@git.description@" property="git.description"/>
+  			<replacefilter token="@git.tag@" property="git.tag"/>
+  			<replacefilter token="@git.revision@" property="git.revision"/>
+  			<replacefilter token="@git.revision-total@" property="git.revision-total"/>
 		</replace>
 					
 	</target>
