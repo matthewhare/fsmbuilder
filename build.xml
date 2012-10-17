@@ -126,7 +126,7 @@
 	  	</exec>
 		<exec executable="bash" output="${ANT_DIR}/version.properties" outputproperty="git.tag">
 		    <arg value="-c"/>
-		    <arg value="git tag -l"/>
+		    <arg value="git tag -l | head -n1"/>
 	  	</exec>
 		<exec executable="bash" output="${ANT_DIR}/version.properties" outputproperty="git.revision">
 		    <arg value="-c"/>
