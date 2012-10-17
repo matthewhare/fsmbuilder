@@ -78,7 +78,7 @@
     	<echo message="package"/>
         <java jar="${ADT}" fork="true"
             failonerror="true"
-            maxmemory="1024m">
+            maxmemory="512m">
         	<arg value="-package"/>
             <arg value="-storetype"/>
             <arg value="${STORETYPE}"/>
