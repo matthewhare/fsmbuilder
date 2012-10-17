@@ -78,7 +78,7 @@
     	<echo message="package"/>
         <java jar="${ADT}" fork="true"
             failonerror="true"
-            maxmemory="512m">
+            maxmemory="1024m">
         	<arg value="-package"/>
             <arg value="-storetype"/>
             <arg value="${STORETYPE}"/>
@@ -138,7 +138,11 @@
 	  	</exec>
 		
 
-		<echo message=" - git.commit[${git.commit}] \n - git.tagstring[${git.tag}] \n - git.revision[${git.revision}] \n - git.revision-total[${git.revision-total}]"/>
+		<echo message=" - git.commit[${git.commit}]"/>
+		<echo message=" - git.describe[${git.describe}]"/>
+		<echo message=" - git.tag[${git.tag}]"/>
+		<echo message=" - git.revision[${git.revision}]"/>
+		<echo message=" - git.revision-total[${git.revision-total}]"/>
 
 		<propertyfile file="${ANT_DIR}/version.properties" comment="My properties">
 			<entry  key="build.date" type="date" value="now" pattern="MMM dd yy hh:mm aa"/>
