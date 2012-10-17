@@ -116,10 +116,7 @@
 
 	<target name="injectVersion">
 		   
-		<exec executable="bash" output="${ANT_DIR}/version.properties" outputproperty="git.description">
-		    <arg value="-c"/>
-		    <arg value="git log `git describe --tags --abbrev=0`..HEAD --oneline"/>
-	  	</exec>
+		
 		<exec executable="bash" output="${ANT_DIR}/version.properties" outputproperty="git.describe">
 		    <arg value="-c"/>
 		    <arg value="git describe"/>
@@ -128,9 +125,13 @@
 		    <arg value="-c"/>
 		    <arg value="git tag -l | head -n1"/>
 	  	</exec>
+		<exec executable="bash" output="${ANT_DIR}/version.properties" outputproperty="git.description">
+		    <arg value="-c"/>
+		    <arg value="git log --pretty=format:' - (%ar) %s' HEAD...${git.tag}"/>
+	  	</exec>
 		<exec executable="bash" output="${ANT_DIR}/version.properties" outputproperty="git.revision">
 		    <arg value="-c"/>
-		    <arg value="git log `git describe --tags --abbrev=0`..HEAD --oneline | wc -l"/>
+		    <arg value="git log --pretty=format:' - (%ar) %s' HEAD...${git.tag} | wc -l"/>
 	  	</exec>
 		<exec executable="bash" output="${ANT_DIR}/version.properties" outputproperty="git.revision-total">
 		    <arg value="-c"/>
