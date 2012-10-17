@@ -3,5 +3,5 @@
 	<versionNumber>@build.major@.@build.minor@.@build.number@</versionNumber> 
 	<versionLabel>@build.major@.@build.minor@.@build.number@</versionLabel> 
 	<url>https://buildhive.cloudbees.com/job/matthewhare/job/fsmbuilder/ws/release/FSMBuilder.air</url>
-	<description><![CDATA[The latest new stuff]]></description> 
+	<description><![CDATA[@build.description@]]></description> 
 </update>

@@ -120,15 +120,19 @@
 		    <arg value="-c"/>
 		    <arg value="git rev-list --all | wc -l"/>
 	  	</exec>
-		<exec executable="git" outputproperty="git.tagstring">
+		<exec executable="bash" output="${ANT_DIR}/version.properties" outputproperty="git.history">
+		    <arg value="-c"/>
+		    <arg value="git log --pretty=format:' - (%ar) %s/'"/>
+	  	</exec>
+		<exec executable="git" output="${ANT_DIR}/version.properties" outputproperty="git.tagstring">
 	      <arg value="describe"/>
 	    </exec>
-	    <exec executable="git" outputproperty="git.revision">
+	    <exec executable="git" output="${ANT_DIR}/version.properties" outputproperty="git.revision">
 	      <arg value="rev-parse"/>
 	      <arg value="HEAD"/>
 	    </exec>
 
-		<echo message="git.commit = ${git.commit} ${git.tagstring} ${git.revision}"/>
+		<echo message="git.commit = ${git.commit} ${git.history}"/>
 
 		<propertyfile file="${ANT_DIR}/version.properties" comment="My properties">
 			<entry  key="build.state" value="beta"/>
@@ -137,6 +141,7 @@
 			<entry  key="build.number" type="int" value="${git.commit}"/>
 			<entry  key="build.number.total" type="int" default="0" operation="+"/>
 			<entry  key="build.date" type="date" value="now" pattern="MMM dd yy hh:mm aa"/>
+			
 		</propertyfile>
 			
 		<!-- FSMBuilder-app.xml > app descriptor file -->
@@ -163,6 +168,7 @@
   			<replacefilter token="@build.major@" property="build.major"/>
   			<replacefilter token="@build.minor@" property="build.minor"/>
   			<replacefilter token="@build.state@" property="build.state"/>
+  			<replacefilter token="@build.description@" property="${git.history}"/>
 		</replace>
 					
 	</target>
