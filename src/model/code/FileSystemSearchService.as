@@ -5,12 +5,14 @@ package model.code
 	import flash.events.FileListEvent;
 	import flash.filesystem.File;
 	
+	import model.code.vo.SearchFileVO;
+	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 
-	public class PackageService extends EventDispatcher
+	public class FileSystemSearchService extends EventDispatcher
 	{
-		public function PackageService()
+		public function FileSystemSearchService()
 		{
 		}
 		
@@ -41,7 +43,7 @@ package model.code
 			var dir:File = new File(folderPath);
 			if (!dir.isDirectory)
 			{
-				Alert.show("Invalid directory path.", "Error");
+				dispatchEvent(new Event("searchError"))
 			}
 			else
 			{
@@ -71,11 +73,18 @@ package model.code
 				{
 					currentSubdirectories.push(currentNodes[i]);
 				}
-				if (node.name.search(pattern) > -1) 
+				
+				//only return files
+				else if (node.name.search(pattern) > -1) 
 				{
 					var newData:Object = {name:node.name,
 						path:node.nativePath,
 						type:node.extension}
+						
+					var so:SearchFileVO = new SearchFileVO();
+						so.name = node.name;
+						so.path = node.nativePath;
+						so.extension = node.extension;
 					resultData.addItem(newData);
 				}
 			}

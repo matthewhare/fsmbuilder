@@ -3,7 +3,6 @@
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 title="Project Root"
 		 close="closeButtonHandler(event)"
-		 addedToStage="folderSelected()"
 		 xmlns:mx="library://ns.adobe.com/flex/mx" width="446" height="600">
 	
 	<fx:Script>
@@ -16,16 +15,22 @@
 			
 			public var projectModel:ProjectModel;
 			
+			protected function init():void
+			{
+				folderTree.directory = File.userDirectory;
+				
+				if (projectModel.sourceURL && projectModel.sourceURL.length > 0)
+				{
+					folderTree.selectedPath = projectModel.sourceURL;
+				}
+				else 
+					folderTree.directory = File.userDirectory;
+			}
+			
 			protected function clickHandler(event:MouseEvent):void
 			{
 				projectModel.sourceURL = folderTree.selectedPath;
 				PopUpManager.removePopUp(this);
-			}
-			
-			protected function folderSelected():void
-			{
-//				if (projectModel.sourceURL && projectModel.sourceURL.length > 0)
-//					folderTree.selectedPath = projectModel.sourceURL;
 			}
 			
 			protected function closeButtonHandler(event:CloseEvent):void
@@ -43,7 +48,7 @@
 		<s:Spacer height="5" />
 		<s:Label text="Select Project Root"/>
 		<mx:HDividedBox width="100%" height="100%"> 
-			<mx:FileSystemTree id="folderTree" width="343" height="494" enumerationMode="directoriesOnly" directory="{File.userDirectory}"/>     
+			<mx:FileSystemTree id="folderTree" width="343" height="494" enumerationMode="directoriesOnly" creationComplete="init()"/>     
 		</mx:HDividedBox> 
 	</s:VGroup>
 	<s:Button right="10" bottom="10" label="Select" click="clickHandler(event)"/>
