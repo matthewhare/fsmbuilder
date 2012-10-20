@@ -5,11 +5,6 @@
 					   width="1000"
 					   height="1000" xmlns:local="*" xmlns:model="model.*" xmlns:view="view.*" xmlns:diagram="model.diagram.*" xmlns:autoupdate="utils.autoupdate.*" xmlns:code="model.code.*"
 					   >
-	<fx:Script>
-		<![CDATA[
-			import utils.autoupdate.AutoUpdater;
-		]]>
-	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<diagram:FSMModel id="FSMmodel"/>
@@ -18,17 +13,21 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import utils.system.FileSystemService;
 			import model.diagram.StateVO;
 			
+			import mx.core.Window;
+			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
 			
 			import spark.events.IndexChangeEvent;
 			
+			import utils.autoupdate.AutoUpdater;
+			import utils.system.FileSystemService;
+			import utils.writers.ActionScriptWriter;
+			
 			import view.DefaultStateObject;
 			import view.TransitionObject;
-			
-			import utils.writers.ActionScriptWriter;
 			
 			
 			protected function save():void
@@ -50,6 +49,14 @@
 			protected function outputUpdate(event:FlexEvent = null):void
 			{
 				output.text = new ActionScriptWriter().getFileContent(FSMmodel);
+			}
+			
+			protected function projectRoot_clickHandler(event:MouseEvent):void
+			{
+				var window:ProjectRootWindow = new ProjectRootWindow();
+					window.projectModel = projectModel;
+				PopUpManager.addPopUp(window, this, false);
+				PopUpManager.centerPopUp(window);
 			}
 			
 		]]>
@@ -77,8 +84,11 @@
 						
 					</view:Diagram>
 					<s:VGroup height="100%" width="200">
-						<s:TextInput id="sourceInput" width="100%"/>
-						<mx:Accordion width="200" resizeToContent="true">
+						<s:Spacer height="10"/>
+						<s:Label text="Project Source" textAlign="center" width="100%" fontSize="15"/>
+						<s:TextInput id="projectRoot" width="100%" prompt="project root" selectable="false" click="projectRoot_clickHandler(event)" text="{projectModel.sourceURL}"/>
+						<s:TextInput id="projectFramework" width="100%" prompt="project framework"/>
+						<mx:TabNavigator width="200" resizeToContent="true" selectedIndex="2">
 							<s:NavigatorContent width="100%" height="100%" label="Model">
 								<s:List width="100%" height="100%" dataProvider="{projectModel.models}"></s:List>
 							</s:NavigatorContent>
@@ -88,7 +98,7 @@
 							<s:NavigatorContent width="100%" height="100%" label="Controller">
 								<s:List width="100%" height="100%" dataProvider="{projectModel.controllers}"></s:List>
 							</s:NavigatorContent>
-						</mx:Accordion>
+						</mx:TabNavigator>
 						
 					</s:VGroup>
 				</s:HGroup>
@@ -100,6 +110,7 @@
 			</s:NavigatorContent>
 		</mx:ViewStack>
 	</s:VGroup>
+	
 	
 	
 	

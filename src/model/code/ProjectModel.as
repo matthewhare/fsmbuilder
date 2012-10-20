@@ -50,9 +50,15 @@ package model.code
 		}
 		
 		// set source URL
+		[Bindable]
+		public function get sourceURL():String
+		{
+			return _sourceURL;
+		}
+		
 		public function set sourceURL(value:String):void
 		{
-			
+			_sourceURL = value;
 		}
 		
 		
