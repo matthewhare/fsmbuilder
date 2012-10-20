@@ -1,6 +1,6 @@
 package model.code
 {
-	import com.bealearts.collection.VectorCollection;
+	import flash.events.Event;
 	
 	import mx.collections.ArrayCollection;
 
@@ -9,34 +9,12 @@ package model.code
 		
 		private var _sourceURL:String;
 		
-		private var _controllers:VectorCollection
-		private var _models:VectorCollection
-		private var _views:VectorCollection
+		private var _controllers:ArrayCollection
+		private var _models:ArrayCollection
+		private var _views:ArrayCollection
 		
 		public function ProjectModel()
 		{
-			var m:Vector.<String> = new Vector.<String>();
-				m.push("ModelUsers");
-				m.push("ModelGoals");
-			
-			var v:Vector.<String> = new Vector.<String>();
-				v.push("ViewTrophyWall");
-				v.push("ViewGoalContribution");
-				v.push("ViewGoals");
-				v.push("ViewGoalEdit");
-				v.push("ViewProfileEdit");
-				
-				
-			var c:Vector.<String> = new Vector.<String>();
-				c.push("CommandStartUp");
-				c.push("CommandLogin");
-				c.push("CommandLoginVerify");
-				c.push("CommandLoginSuccess");
-				c.push("CommandLoginFail");
-				
-			models = new VectorCollection(m);
-			views = new VectorCollection(v);
-			controllers = new VectorCollection(c);
 		}
 		
 		
@@ -46,7 +24,30 @@ package model.code
 		// search source
 		protected function searchSource():void
 		{
-			
+			var modelSearch:PackageService = new PackageService();
+				modelSearch.addEventListener("searchComplete", modelsUpdate)
+				modelSearch.search(_sourceURL, "model");
+			var viewSearch:PackageService = new PackageService();
+				viewSearch.addEventListener("searchComplete", viewsUpdate)
+				viewSearch.search(_sourceURL, "view");
+			var controllerSearch:PackageService = new PackageService();
+				controllerSearch.addEventListener("searchComplete", controllersUpdate)
+				controllerSearch.search(_sourceURL, "command");
+		}
+		
+		protected function modelsUpdate(event:Event):void
+		{
+			models = PackageService(event.currentTarget).resultData;
+		}
+		
+		protected function viewsUpdate(event:Event):void
+		{
+			views = PackageService(event.currentTarget).resultData;
+		}
+		
+		protected function controllersUpdate(event:Event):void
+		{
+			controllers = PackageService(event.currentTarget).resultData;
 		}
 		
 		// set source URL
@@ -59,38 +60,39 @@ package model.code
 		public function set sourceURL(value:String):void
 		{
 			_sourceURL = value;
+			searchSource();
 		}
 		
 		
 		[Bindable]
-		public function get controllers():VectorCollection
+		public function get controllers():ArrayCollection
 		{
 			return _controllers;
 		}
 
-		public function set controllers(value:VectorCollection):void
+		public function set controllers(value:ArrayCollection):void
 		{
 			_controllers = value;
 		}
 
 		[Bindable]
-		public function get models():VectorCollection
+		public function get models():ArrayCollection
 		{
 			return _models;
 		}
 
-		public function set models(value:VectorCollection):void
+		public function set models(value:ArrayCollection):void
 		{
 			_models = value;
 		}
 
 		[Bindable]
-		public function get views():VectorCollection
+		public function get views():ArrayCollection
 		{
 			return _views;
 		}
 
-		public function set views(value:VectorCollection):void
+		public function set views(value:ArrayCollection):void
 		{
 			_views = value;
 		}

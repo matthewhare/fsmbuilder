@@ -1,4 +1,4 @@
-package model.diagram
+package model.diagram.vo
 {
 	[RemoteClass]
 	public class DiagramPointVO

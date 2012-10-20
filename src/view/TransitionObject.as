@@ -2,8 +2,8 @@ package view
 {
 	import flash.events.Event;
 	
-	import model.diagram.StateVO;
-	import model.diagram.TransitionVO;
+	import model.diagram.vo.StateVO;
+	import model.diagram.vo.TransitionVO;
 	
 	import mx.binding.utils.ChangeWatcher;
 	import mx.core.UIComponent;

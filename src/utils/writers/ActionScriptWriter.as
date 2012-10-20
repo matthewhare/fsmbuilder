@@ -1,8 +1,8 @@
 package utils.writers
 {
 	import model.diagram.FSMModel;
-	import model.diagram.StateVO;
-	import model.diagram.TransitionVO;
+	import model.diagram.vo.StateVO;
+	import model.diagram.vo.TransitionVO;
 
 	public class ActionScriptWriter
 	{

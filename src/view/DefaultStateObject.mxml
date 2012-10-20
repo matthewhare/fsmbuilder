@@ -25,8 +25,8 @@
 		<![CDATA[
 			import flashx.textLayout.edit.SelectionManager;
 			
-			import model.diagram.DiagramPointVO;
-			import model.diagram.StateVO;
+			import model.diagram.vo.DiagramPointVO;
+			import model.diagram.vo.StateVO;
 			
 			import mx.core.DragSource;
 			import mx.events.ColorPickerEvent;

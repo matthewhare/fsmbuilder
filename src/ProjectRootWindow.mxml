@@ -24,8 +24,8 @@
 			
 			protected function folderSelected():void
 			{
-				if (projectModel.sourceURL && projectModel.sourceURL.length > 0)
-					folderTree.selectedPath = projectModel.sourceURL;
+//				if (projectModel.sourceURL && projectModel.sourceURL.length > 0)
+//					folderTree.selectedPath = projectModel.sourceURL;
 			}
 			
 			protected function closeButtonHandler(event:CloseEvent):void

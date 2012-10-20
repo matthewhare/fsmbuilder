@@ -13,7 +13,7 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import model.diagram.StateVO;
+			import model.diagram.vo.StateVO;
 			
 			import mx.core.Window;
 			import mx.events.CloseEvent;
@@ -90,13 +90,13 @@
 						<s:TextInput id="projectFramework" width="100%" prompt="project framework"/>
 						<mx:TabNavigator width="200" resizeToContent="true" selectedIndex="2">
 							<s:NavigatorContent width="100%" height="100%" label="Model">
-								<s:List width="100%" height="100%" dataProvider="{projectModel.models}"></s:List>
+								<s:List width="100%" height="100%" dataProvider="{projectModel.models}" labelField="name"/>
 							</s:NavigatorContent>
 							<s:NavigatorContent width="100%" height="100%" label="View">
-								<s:List width="100%" height="100%" dataProvider="{projectModel.views}"></s:List>
+								<s:List width="100%" height="100%" dataProvider="{projectModel.views}" labelField="name"/>
 							</s:NavigatorContent>
 							<s:NavigatorContent width="100%" height="100%" label="Controller">
-								<s:List width="100%" height="100%" dataProvider="{projectModel.controllers}"></s:List>
+								<s:List width="100%" height="100%" dataProvider="{projectModel.controllers}" labelField="name"/>
 							</s:NavigatorContent>
 						</mx:TabNavigator>
 						

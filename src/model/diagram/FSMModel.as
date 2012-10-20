@@ -1,5 +1,7 @@
 package model.diagram
 {
+	import model.diagram.vo.StateVO;
+
 	[RemoteClass]
 	public class FSMModel
 	{

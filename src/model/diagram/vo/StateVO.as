@@ -1,6 +1,6 @@
-package model.diagram
+package model.diagram.vo
 {
-	import model.diagram.DiagramPointVO;
+	import model.diagram.vo.DiagramPointVO;
 
 	[RemoteClass]
 	public class StateVO
