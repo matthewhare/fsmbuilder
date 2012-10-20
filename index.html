@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Finite State Machine Builder : Finite State Machine builder. Design and build a Finite State Machine, then generate the code. AS3 / RobotLegs only right now." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Finite State Machine Builder</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/matthewhare/fsmbuilder">View on GitHub</a>
+
+          <h1 id="project_title">Finite State Machine Builder</h1>
+          <h2 id="project_tagline">Finite State Machine builder. Design and build a Finite State Machine, then generate the code. AS3 / RobotLegs only right now.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/matthewhare/fsmbuilder/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/matthewhare/fsmbuilder/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>Finite State Machine(FSM) Builder</h1>
+
+<p>Finite State Machine builder. Design and build a Finite State Machine, then generate the code. AS3 / RobotLegs only right now.</p>
+
+<p><strong><em>Objectives</em></strong></p>
+
+<p>Below are listed the fundemental objectives.</p>
+
+<ul>
+<li>create or update an existing MVC(S) project in a given language + framwork</li>
+<li>create state machine for it</li>
+<li>design and edit state machine logic</li>
+<li>access the source of the project, for assistance to the user</li>
+<li>generate code for project</li>
+<li>allow open source development to add support for other languages + frameworks</li>
+</ul><p>The GUI must be able to create and reference exising commands, that the state machine calls.</p>
+
+<p><strong><em>Initial Application</em></strong></p>
+
+<p>The initial GUI will be built to harness ActionScript, and Robotlegs state machines.</p>
+
+<p><strong><em>Design</em></strong></p>
+
+<p>FSMBuilder allows a developer/product manager to design the flow of an application, from "startup", through different other individual states and specify which states are accessable to them. These are known are "Transitions".</p>
+
+<p><strong><em>Code Generation</em></strong></p>
+
+<p>Code is generated easily from the design, which can be viewed by clicking on the relevant tab. This code is generated via a "Writer" class, which implements the IWriter interface. It simply takes the FSMModel, and parses it.</p>
+
+<p>Currently only Actionscript &gt; Robotlegs &gt; Enchanced FSM is supported. But any other FSM would be could be easily integrated.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Finite State Machine Builder maintained by <a href="https://github.com/matthewhare">matthewhare</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
