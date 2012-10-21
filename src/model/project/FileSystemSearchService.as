@@ -1,11 +1,11 @@
-package model.code
+package model.project
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.FileListEvent;
 	import flash.filesystem.File;
 	
-	import model.code.vo.SearchFileVO;
+	import model.project.vo.SearchFileVO;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -123,7 +123,12 @@ package model.code
 		{
 			_resultData = value;
 		}
-
-
+		
+		public function validateClass():void
+		{
+			// get list of package paths
+			
+			// get Framework MVCS 'extends' class type
+		}
 	}
 }

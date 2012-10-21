@@ -1,4 +1,4 @@
-package model.code.vo
+package model.project.vo
 {
 	public class SearchDirectoryVO
 	{

@@ -1,4 +1,4 @@
-package model.code.vo
+package model.project.vo
 {
 	public class SearchFileVO
 	{
@@ -41,8 +41,6 @@ package model.code.vo
 		public function set path(value:String):void
 		{
 			_path = value;
-		}
-
-
+		}		
 	}
 }

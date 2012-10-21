@@ -1,8 +1,8 @@
-package model.code
+package model.project
 {
 	import flash.events.Event;
 	
-	import model.code.vo.SearchFileVO;
+	import model.project.vo.SearchFileVO;
 	
 	import mx.collections.ArrayCollection;
 

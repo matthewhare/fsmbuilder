@@ -1,4 +1,4 @@
-package view
+package view.diagram
 {
 	import flash.events.Event;
 	
