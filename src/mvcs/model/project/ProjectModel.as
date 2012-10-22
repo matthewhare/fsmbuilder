@@ -1,11 +1,14 @@
 package mvcs.model.project
 {
 	import flash.events.Event;
+	import flash.filesystem.File;
+	
+	import framework.events.PayloadEvent;
 	
 	import mvcs.model.project.vo.SearchFileVO;
+	import mvcs.services.FileSystemSearchService;
 	
 	import mx.collections.ArrayCollection;
-	import mvcs.services.FileSystemSearchService;
 
 	public class ProjectModel
 	{
@@ -39,42 +42,6 @@ package mvcs.model.project
 				controllerSearch.search(_sourceURL + "/src", "command");
 		}
 		
-		protected function searchForFramework():void
-		{
-			framework = "Not Known";
-			var frameworkSearch:FileSystemSearchService = new FileSystemSearchService();
-				frameworkSearch.addEventListener("searchComplete", frameworkUpdate)
-				frameworkSearch.search(_sourceURL + "/lib", "swiz-framework-v");
-				frameworkSearch.search(_sourceURL + "/lib", "robotlegs");
-				frameworkSearch.search(_sourceURL + "/lib", "puremvc");
-				frameworkSearch.search(_sourceURL + "/libs", "swiz-framework-v");
-				frameworkSearch.search(_sourceURL + "/libs", "robotlegs");
-				frameworkSearch.search(_sourceURL + "/libs", "puremvc");
-		}
-		
-		protected function frameworkUpdate(event:Event):void
-		{
-			var s:FileSystemSearchService = FileSystemSearchService(event.currentTarget);
-
-			if (s.resultData.length == 0)
-				return;
-			
-			var f:SearchFileVO = SearchFileVO(s.resultData[0]);
-			
-			switch (true)
-			{
-				case f.name.indexOf("swiz-framework-v"):
-					framework = "Swiz";
-					break;
-				case f.name.indexOf("robotlegs"):
-					framework = "RobotLegs";
-					break;
-				case f.name.indexOf("puremvc"):
-					framework = "PureMVC"
-					break;	
-			}
-		}
-		
 		protected function modelsUpdate(event:Event):void
 		{
 			models = FileSystemSearchService(event.currentTarget).resultData;
@@ -89,6 +56,46 @@ package mvcs.model.project
 		{
 			controllers = FileSystemSearchService(event.currentTarget).resultData;
 		}
+		
+		protected function searchForFramework():void
+		{
+			framework = "Not Known";
+			
+			var folders:Array = ["lib", "libs"];
+			var frameworks:Array = ["swiz", "robotlegs", "puremvc"];
+			
+			for (var i:int = 0; i < folders.length; i++) 
+			{
+				for (var j:int = 0; j < frameworks.length; j++) 
+				{
+					var frameworkSearch:FileSystemSearchService = new FileSystemSearchService();
+						frameworkSearch.addEventListener("searchFound", frameworkUpdate)
+						frameworkSearch.search(_sourceURL + "/" + folders[i], frameworks[j]);
+				}
+				
+			}
+		}
+		
+		protected function frameworkUpdate(event:PayloadEvent):void
+		{
+		
+			
+			var fileName:String = File(event.payload).name;
+			
+			switch (true)
+			{
+				case (fileName.indexOf("swiz-framework-v") > -1):
+					framework = "Swiz (v" + fileName.split("swiz-framework-v").join("").split(".swc").join("") + ")";
+					break;
+				case (fileName.indexOf("robotlegs") > -1):
+					framework = "Robotlegs (v" + fileName.split("robotlegs-framework-v").join("").split(".swc").join("") + ")";
+					break;
+				case (fileName.indexOf("puremvc") > -1):
+					framework = "PureMVC"
+					break;	
+			}
+		}
+
 		
 		// set source URL
 		[Bindable]

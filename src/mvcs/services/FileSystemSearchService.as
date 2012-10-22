@@ -5,6 +5,8 @@ package mvcs.services
 	import flash.events.FileListEvent;
 	import flash.filesystem.File;
 	
+	import framework.events.PayloadEvent;
+	
 	import mvcs.model.project.vo.SearchFileVO;
 	
 	import mx.collections.ArrayCollection;
@@ -27,7 +29,7 @@ package mvcs.services
 		private var _resultData:ArrayCollection = new ArrayCollection(); 
 		// A collection of object with data pertaining to matching files
 		private var pattern:RegExp; // The pattern to search for in file (and directory) names
-		
+		private var searchString:String;
 		
 		/**
 		 * Invoked when the user clicks the Search button. This method initiates the search
@@ -40,6 +42,7 @@ package mvcs.services
 		public function search(folderPath:String, searchString:String):void 
 		{
 			resultData = new ArrayCollection();
+			this.searchString = searchString;
 			var patternString:String = searchString.replace(/\./g, "\\.");
 				patternString = patternString.replace(/\*/g, ".*");
 				patternString = patternString.replace(/\?/g, ".");
@@ -81,15 +84,19 @@ package mvcs.services
 				//only return files
 				else if (node.name.search(pattern) > -1) 
 				{
-					var newData:Object = {name:node.name,
-						path:node.nativePath,
-						type:node.extension}
-						
-					var so:SearchFileVO = new SearchFileVO();
-						so.name = node.name;
-						so.path = node.nativePath;
-						so.extension = node.extension;
-					resultData.addItem(newData);
+					trace("found :" +node.name, node.extension);
+					resultData.addItem(node);
+					dispatchEvent(new PayloadEvent("searchFound", node));
+				}
+				else if (node.name.indexOf(searchString) > -1)
+				{
+					resultData.addItem(node);
+					dispatchEvent(new PayloadEvent("searchFound", node));
+					trace("found :" +node.name, node.extension);
+				}
+				else
+				{
+					trace("missed :" +node.name, " found["+node.name.indexOf(searchString)+"]", " fileName["+node.name+"]", " searchString["+searchString+"]");
 				}
 			}
 			for (i = currentSubdirectories.length - 1; i > -1; i--) 

@@ -4,9 +4,9 @@ package mvcs.utils.writers
 	import mvcs.model.diagram.vo.StateVO;
 	import mvcs.model.diagram.vo.TransitionVO;
 
-	public class ActionScriptWriter
+	public class RobotlegsEnhancedWriter
 	{
-		public function ActionScriptWriter()
+		public function RobotlegsEnhancedWriter()
 		{
 		}
 		
