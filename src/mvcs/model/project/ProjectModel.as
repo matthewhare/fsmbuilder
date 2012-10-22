@@ -5,6 +5,7 @@ package mvcs.model.project
 	import mvcs.model.project.vo.SearchFileVO;
 	
 	import mx.collections.ArrayCollection;
+	import mvcs.services.FileSystemSearchService;
 
 	public class ProjectModel
 	{

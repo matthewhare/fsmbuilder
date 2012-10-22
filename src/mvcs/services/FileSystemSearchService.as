@@ -1,4 +1,4 @@
-package mvcs.model.project
+package mvcs.services
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
