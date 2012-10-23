@@ -27,7 +27,8 @@
 		<echo message="build-release"/>
         <antcall target="init"/>
         <antcall target="package"/>
-        <antcall target="github-upload"/>
+        <antcall target="github-upload-air"/>
+        <antcall target="github-upload-update-xml"/>
         <antcall target="cleanup"/>
     </target>
 	
@@ -186,24 +187,26 @@
 					
 	</target>
 	
-	<target name="github-upload" depends="package">
+	<target name="github-upload-air" depends="package">
 		<github-download-file-upload 
             user="matthewhare"
             password="speedy007"
             repositoryowner="matthewhare"
             repositoryname="fsmbuilder"
             fileurl="${RELEASE_DIR}/FSMBuilder.air"
-			fileDescription="latest build (${git.describe})"
+			fileDescription="latest build (${git.tag}.${git.revision}.${git.revision-total})"
             override="true"
         />
+	</target>
+	<target name="github-upload-update-xml" depends="injectVersion">
 		<github-download-file-upload 
-            user="matthewhare"
-            password="speedy007"
-            repositoryowner="matthewhare"
-            repositoryname="fsmbuilder"
-            fileurl="${UPDATER_DIR}/update.xml"
-			fileDescription="latest build update.xml (${git.describe})"
-            override="true"
-        />
+		            user="matthewhare"
+		            password="speedy007"
+		            repositoryowner="matthewhare"
+		            repositoryname="fsmbuilder"
+		            fileurl="${UPDATER_DIR}/update.xml"
+					fileDescription="latest build update.xml (${git.tag}.${git.revision}.${git.revision-total}"
+		            override="true"
+		        />
 	</target>
 </project>
