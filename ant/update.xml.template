@@ -2,6 +2,6 @@
 <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5">
 	<versionNumber>@git.tag@.@git.revision@</versionNumber> 
 	<versionLabel>@git.tag@.@git.revision@.@git.revision-total@</versionLabel> 
-	<url>https://buildhive.cloudbees.com/job/matthewhare/job/fsmbuilder/ws/release/FSMBuilder.air</url>
+	<url>http://cloud.github.com/downloads/matthewhare/fsmbuilder/FSMBuilder.air</url>
 	<description><![CDATA[@git.description@]]></description> 
 </update>

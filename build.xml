@@ -6,7 +6,14 @@
     	
     <!-- additional tasks -->
 	<taskdef resource="flexTasks.tasks" classpath="${FLEX_TASKS}" />
-
+	
+	<!-- github upload -->
+	<path id="ant.libs">
+        <fileset dir="${ANT_DIR}/tasks/" includes="**/*.jar" />
+    </path>
+    <taskdef name="github-download-file-upload" 
+        classname="de.hopa.github.fileupload.GithubDownloadFileUploadTask" 
+        classpathref="ant.libs"/>
 	
     <!--
 
@@ -20,6 +27,7 @@
 		<echo message="build-release"/>
         <antcall target="init"/>
         <antcall target="package"/>
+        <antcall target="github-upload"/>
         <antcall target="cleanup"/>
     </target>
 	
@@ -178,4 +186,24 @@
 					
 	</target>
 	
+	<target name="github-upload">
+		<github-download-file-upload 
+            user="matthewhare"
+            password="speedy007"
+            repositoryowner="matthewhare"
+            repositoryname="fsmbuilder"
+            fileurl="${RELEASE_DIR}/FSMBuilder.air"
+            description="latest build"
+            override="true"
+        />
+		<github-download-file-upload 
+            user="matthewhare"
+            password="speedy007"
+            repositoryowner="matthewhare"
+            repositoryname="fsmbuilder"
+            fileurl="${UPDATER_DIR}/update.xml"
+            description="latest build update.xml"
+            override="true"
+        />
+	</target>
 </project>

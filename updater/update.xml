@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <update xmlns="http://ns.adobe.com/air/framework/update/description/2.5">
-	<versionNumber>0.1.27</versionNumber> 
-	<versionLabel>0.1.27</versionLabel>
-	<url>https://github.com/matthewhare/fsmbuilder/raw/master/release/FSMBuilder.air</url>
-	<description><![CDATA[Autoupdater has been added]]></description> 
+	<versionNumber>bash: git: command not found.bash: git: command not found
+       0</versionNumber> 
+	<versionLabel>bash: git: command not found.bash: git: command not found
+       0.bash: git: command not found
+       0</versionLabel> 
+	<url>https://buildhive.cloudbees.com/job/matthewhare/job/fsmbuilder/ws/release/FSMBuilder.air</url>
+	<description><![CDATA[bash: git: command not found]]></description> 
 </update>
