@@ -193,7 +193,7 @@
             repositoryowner="matthewhare"
             repositoryname="fsmbuilder"
             fileurl="${RELEASE_DIR}/FSMBuilder.air"
-            description="latest build"
+			fileDescription="latest build"
             override="true"
         />
 		<github-download-file-upload 
@@ -202,7 +202,7 @@
             repositoryowner="matthewhare"
             repositoryname="fsmbuilder"
             fileurl="${UPDATER_DIR}/update.xml"
-            description="latest build update.xml"
+			fileDescription="latest build update.xml"
             override="true"
         />
 	</target>
