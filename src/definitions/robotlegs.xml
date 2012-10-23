@@ -1,0 +1,32 @@
+<framework name="robotlegs">
+	<group name="Model">
+		<regex>
+			<filename>
+				<[CDATA[(\bModel([A-Z]\w*)|(\w*)Model\b)]]>
+			</filename>
+			<content>
+				
+			</content>
+		</regex>
+	</group>
+	<group name="View">
+		<regex>
+			<filename>
+				<[CDATA[(\bView([A-Z]\w*)|(\w*)View\b)]]>
+			</filename>
+			<content>
+			
+			</content>
+		</regex>
+	</group>
+	<group name="Controller">
+		<regex>
+			<filename>
+				<[CDATA[(\bCommand([A-Z]\w*)|(\w*)Command\b)]]>
+			</filename>
+			<content>
+			
+			</content>
+		</regex>
+	</group>
+</framework>

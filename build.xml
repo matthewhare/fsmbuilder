@@ -198,6 +198,7 @@
             override="true"
         />
 	</target>
+	
 	<target name="github-upload-update-xml" depends="injectVersion">
 		<github-download-file-upload 
 		            user="matthewhare"
