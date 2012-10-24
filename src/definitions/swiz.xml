@@ -18,7 +18,7 @@
 				<[CDATA[import(\s*)org.robotlegs.mvcs.Actor([A-Za-z0-9_.\s]*)extends([\s]*)Actor]>
 			</match>
 		</group>
-		<group name="View (mediators)">
+		<group name="View">
 			<match type="filename">
 					<[CDATA[(\bMediator([A-Z]\w*)|(\w*)Mediator\b)(.as|.mxml)]]>
 			</match>

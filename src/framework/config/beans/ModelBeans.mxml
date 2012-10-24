@@ -1,7 +1,8 @@
 <swiz:BeanProvider 
 	xmlns:fx="http://ns.adobe.com/mxml/2009" 
-	xmlns:swiz="http://swiz.swizframework.org" xmlns:diagram="mvcs.model.diagram.*" xmlns:project="mvcs.model.project.*">
+	xmlns:swiz="http://swiz.swizframework.org" xmlns:diagram="mvcs.model.diagram.*" xmlns:project="mvcs.model.project.*" xmlns:definitions="mvcs.model.definitions.*">
 
 	<diagram:FSMModel id="FSMModel"/>
 	<project:ProjectModel id="ProjectModel"/>
+	<definitions:DefinitionsModel id="definitionsModel" />
 </swiz:BeanProvider>
