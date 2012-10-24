@@ -199,7 +199,7 @@
         />
 	</target>
 	
-	<target name="github-upload-update-xml" depends="injectVersion">
+	<target name="github-upload-update-xml">
 		<github-download-file-upload 
 		            user="matthewhare"
 		            password="speedy007"
