@@ -186,7 +186,7 @@
 					
 	</target>
 	
-	<target name="github-upload" depends="package">
+	<target name="github-upload">
 		<github-download-file-upload 
             user="matthewhare"
             password="speedy007"
