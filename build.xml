@@ -187,6 +187,7 @@
 	</target>
 	
 	<target name="github-upload">
+		<property file="${ANT_DIR}/version.properties"/>
 		<github-download-file-upload 
             user="matthewhare"
             password="speedy007"
