@@ -193,16 +193,16 @@
             password="speedy007"
             repositoryowner="matthewhare"
             repositoryname="fsmbuilder"
-            fileurl="${RELEASE_DIR}/FSMBuilder.air"
-			fileDescription="latest build (${git.tag}.${git.revision}.${git.revision-total})"
+            fileurl="${UPDATER_DIR}/update.xml"
+			fileDescription="latest build update.xml (${git.tag}.${git.revision}.${git.revision-total})"
             override="true"/>
 		<github-download-file-upload 
             user="matthewhare"
             password="speedy007"
             repositoryowner="matthewhare"
             repositoryname="fsmbuilder"
-            fileurl="${UPDATER_DIR}/update.xml"
-			fileDescription="latest build update.xml (${git.tag}.${git.revision}.${git.revision-total})"
+            fileurl="${RELEASE_DIR}/FSMBuilder.air"
+			fileDescription="latest build (${git.tag}.${git.revision}.${git.revision-total})"
             override="true"/>
 	</target>
 </project>
