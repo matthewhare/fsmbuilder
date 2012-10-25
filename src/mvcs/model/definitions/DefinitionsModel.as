@@ -13,11 +13,11 @@ package mvcs.model.definitions
 		protected const DEFINITIONS_URL:String = File.applicationDirectory.nativePath +"/definitions/"
 		protected const DEFINITIONS_URL_APP:String = "/definitions/"
 		
-		public var definitions:Dictionary;
+		public var definitions:XMLList;
 		
 		public function DefinitionsModel()
 		{
-			definitions = new Dictionary();
+			definitions = new XMLList();
 			definitionsLoad();
 		}
 		
@@ -43,7 +43,7 @@ package mvcs.model.definitions
 		{
 			var loader:URLLoader = event.target as URLLoader;
 			var	xml:XML = new XML(loader.data);
-				definitions[xml.attribute("name")] = xml;
+				definitions[definitions.length()] = xml;
 		}
 	}
 }
