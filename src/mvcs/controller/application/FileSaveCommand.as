@@ -24,7 +24,7 @@ package mvcs.controller.application
 		
 		public function execute():void
 		{
-			fileIOService.writeObjectToFile(fsmModel, "FSMModel.fsm", projectModel.sourceURL);
+			fileIOService.writeObjectToFile(fsmModel, ".fsm", projectModel.projectRoot);
 		}
 	}
 }

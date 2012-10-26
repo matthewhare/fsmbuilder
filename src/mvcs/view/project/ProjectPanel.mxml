@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx" width="250" height="100%">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mvcs.model.definitions.DefinitionsModel;
+			import mvcs.model.project.ProjectModel;
+			
+			import mx.core.FlexGlobals;
+			import mx.managers.PopUpManager;
+			
+			import org.swizframework.core.ISwiz;
+			import org.swizframework.core.Swiz;
+			
+			import spark.components.Application;
+			
+			[Bindable]
+			public var projectModel:ProjectModel;
+			
+			[Bindable]
+			public var definitionsModel:DefinitionsModel;
+			
+			public var swiz:ISwiz;
+			
+			protected function projectRoot_clickHandler(event:MouseEvent):void
+			{
+				projectModel.frameworkDefinitions = definitionsModel.definitions;
+				var window:ProjectRootWindow = new ProjectRootWindow();
+				swiz.registerWindow(window);
+				PopUpManager.addPopUp(window, FlexGlobals.topLevelApplication as DisplayObjectContainer, false);
+				PopUpManager.centerPopUp(window);
+			}
+			
+			protected function definitionsProcess():void
+			{
+				
+			}
+		]]>
+	</fx:Script>
+	<s:Spacer height="10"/>
+	<s:Label text="Project Source" textAlign="center" width="100%" fontSize="15"/>
+	<s:Label id="projectFramework" textAlign="center" width="100%" text="{projectModel.framework}"/>
+	<s:TextInput id="projectRoot" color="0xcccccc" width="100%" prompt="project root" selectable="false" click="projectRoot_clickHandler(event)" text="{projectModel.projectRoot}"/>
+	<mx:Tree id="projectTree" 
+			 width="100%" height="100%"
+			 showRoot="false"
+			 />
+	
+	
+</s:VGroup>

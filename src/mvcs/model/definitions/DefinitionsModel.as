@@ -10,14 +10,15 @@ package mvcs.model.definitions
 
 	public class DefinitionsModel
 	{
-		protected const DEFINITIONS_URL:String = File.applicationDirectory.nativePath +"/definitions/"
-		protected const DEFINITIONS_URL_APP:String = "/definitions/"
+		protected static const DEFINITIONS_URL:String = File.applicationDirectory.nativePath +"/definitions/"
+		protected static const DEFINITIONS_URL_APP:String = "/definitions/"
+		protected static const FILE_SUFFIX_XML:String = ".xml";
 		
-		public var definitions:XMLList;
+		public var definitions:XML;
 		
 		public function DefinitionsModel()
 		{
-			definitions = new XMLList();
+			definitions = new XML("<definitions/>");
 			definitionsLoad();
 		}
 		
@@ -25,7 +26,7 @@ package mvcs.model.definitions
 		{
 			var search:FileSystemSearchService = new FileSystemSearchService();
 				search.addEventListener("searchComplete", definitionsFound);
-				search.search(DEFINITIONS_URL, ".xml");
+				search.search(DEFINITIONS_URL, FILE_SUFFIX_XML);
 		}
 
 		protected function definitionsFound(event:Event):void
@@ -43,7 +44,9 @@ package mvcs.model.definitions
 		{
 			var loader:URLLoader = event.target as URLLoader;
 			var	xml:XML = new XML(loader.data);
-				definitions[definitions.length()] = xml;
+				definitions.appendChild(xml);
+				
+			trace("definitions ", definitions.toXMLString())
 		}
 	}
 }

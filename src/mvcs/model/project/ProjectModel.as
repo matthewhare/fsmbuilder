@@ -12,9 +12,12 @@ package mvcs.model.project
 
 	public class ProjectModel
 	{
-		
-		private var _sourceURL:String;
+		private var _frameworkDefinitions:XML;
+		private var _frameworkMatched:XML;
+		private var _projectRoot:String;
+		private var _projectSource:String;
 		private var _framework:String;
+		private var _classes:XML;
 		
 		private var _controllers:ArrayCollection
 		private var _models:ArrayCollection
@@ -31,19 +34,24 @@ package mvcs.model.project
 		// search source
 		protected function searchSource():void
 		{
+			classes = new XML();
+			
+			
+			
 			var modelSearch:FileSystemSearchService = new FileSystemSearchService();
 				modelSearch.addEventListener("searchComplete", modelsUpdate)
-				modelSearch.search(_sourceURL + "/src", "model");
+				modelSearch.search(_projectSource, "model");
 			var viewSearch:FileSystemSearchService = new FileSystemSearchService();
 				viewSearch.addEventListener("searchComplete", viewsUpdate)
-				viewSearch.search(_sourceURL + "/src", "view");
+				viewSearch.search(_projectSource, "view");
 			var controllerSearch:FileSystemSearchService = new FileSystemSearchService();
 				controllerSearch.addEventListener("searchComplete", controllersUpdate)
-				controllerSearch.search(_sourceURL + "/src", "command");
+				controllerSearch.search(_projectSource, "command");
 		}
 		
 		protected function modelsUpdate(event:Event):void
 		{
+			
 			models = FileSystemSearchService(event.currentTarget).resultData;
 		}
 		
@@ -57,20 +65,20 @@ package mvcs.model.project
 			controllers = FileSystemSearchService(event.currentTarget).resultData;
 		}
 		
-		protected function searchForFramework():void
+		protected function frameworkDetect():void
 		{
 			framework = "Not Known";
 			
 			var folders:Array = ["lib", "libs"];
-			var frameworks:Array = ["swiz", "robotlegs", "puremvc"];
+			var frameworks:XMLList = frameworkDefinitions..framework.library.group.match.(@type == "filename").text();	// swc package names
 			
 			for (var i:int = 0; i < folders.length; i++) 
 			{
-				for (var j:int = 0; j < frameworks.length; j++) 
+				for (var j:int = 0; j < frameworks.length(); j++) 
 				{
 					var frameworkSearch:FileSystemSearchService = new FileSystemSearchService();
 						frameworkSearch.addEventListener("searchFound", frameworkUpdate)
-						frameworkSearch.search(_sourceURL + "/" + folders[i], frameworks[j]);
+						frameworkSearch.search(_projectRoot + "/" + folders[i], frameworks[j]);
 				}
 				
 			}
@@ -78,39 +86,25 @@ package mvcs.model.project
 		
 		protected function frameworkUpdate(event:PayloadEvent):void
 		{
-		
-			
-			var fileName:String = File(event.payload).name;
-			
-			switch (true)
-			{
-				case (fileName.indexOf("swiz-framework-v") > -1):
-					framework = "Swiz (v" + fileName.split("swiz-framework-v").join("").split(".swc").join("") + ")";
-					break;
-				case (fileName.indexOf("robotlegs") > -1):
-					framework = "Robotlegs (v" + fileName.split("robotlegs-framework-v").join("").split(".swc").join("") + ")";
-					break;
-				case (fileName.indexOf("puremvc") > -1):
-					framework = "PureMVC"
-					break;	
-			}
+			framework = "("+File(event.payload).name.replace(/(-framework-)|(-)|(.swc)/g," ").substr(0,-1)+")";
 		}
 
 		
 		// set source URL
 		[Bindable]
-		public function get sourceURL():String
+		public function get projectRoot():String
 		{
-			return _sourceURL;
+			return _projectRoot;
 		}
 		
-		public function set sourceURL(value:String):void
+		public function set projectRoot(value:String):void
 		{
-			_sourceURL = value;
+			_projectRoot = value;
+			_projectSource = value + "/src"
+			frameworkDetect();
 			searchSource();
-			searchForFramework();
 		}
-		
+	
 		
 		[Bindable]
 		public function get controllers():ArrayCollection
@@ -154,6 +148,27 @@ package mvcs.model.project
 		public function set framework(value:String):void
 		{
 			_framework = value;
+		}
+
+		[Bindable]
+		public function get classes():XML
+		{
+			return _classes;
+		}
+
+		public function set classes(value:XML):void
+		{
+			_classes = value;
+		}
+
+		public function get frameworkDefinitions():XML
+		{
+			return _frameworkDefinitions;
+		}
+
+		public function set frameworkDefinitions(value:XML):void
+		{
+			_frameworkDefinitions = value;
 		}
 
 

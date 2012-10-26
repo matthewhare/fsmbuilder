@@ -6,7 +6,10 @@
 					   height="1000" 
 					   xmlns:local="*" 
 					   xmlns:config="framework.config.*"
-					   implements="org.swizframework.core.ISwizAware" xmlns:diagram="mvcs.view.diagram.*" xmlns:writer="mvcs.view.writer.*" 
+					   xmlns:diagram="mvcs.view.diagram.*" 
+					   xmlns:writer="mvcs.view.writer.*" 
+					   xmlns:project="mvcs.view.project.*" 
+					   implements="org.swizframework.core.ISwizAware"
 					   >
 	<fx:Declarations>
 		<config:FSMConfig id="config"/>
@@ -16,6 +19,7 @@
 		<![CDATA[
 			import framework.events.CommandEvent;
 			
+			import mvcs.model.definitions.DefinitionsModel;
 			import mvcs.model.diagram.FSMModel;
 			import mvcs.model.project.ProjectModel;
 			import mvcs.utils.autoupdate.AutoUpdater;
@@ -30,12 +34,6 @@
 			
 			import spark.events.IndexChangeEvent;
 			
-			private var _swiz:ISwiz
-			public function set swiz(value:ISwiz):void
-			{
-				_swiz = value;
-			}
-			
 			[Inject]
 			public var dispatcher:EventDispatcher
 			
@@ -46,6 +44,10 @@
 			[Inject]
 			[Bindable]
 			public var projectModel:ProjectModel;
+			
+			[Inject]
+			[Bindable]
+			public var definitionsModel:DefinitionsModel;
 			
 			[Inject]
 			[Bindable]
@@ -62,24 +64,25 @@
 				output.text = new RobotlegsEnhancedWriter().getFileContent(fsmModel);
 			}
 			
-			protected function projectRoot_clickHandler(event:MouseEvent):void
+			protected var _swiz:ISwiz
+			public function set swiz(value:ISwiz):void
 			{
-				var window:ProjectRootWindow = new ProjectRootWindow();
-				_swiz.registerWindow(window);
-				PopUpManager.addPopUp(window, this, false);
-				PopUpManager.centerPopUp(window);
-
-				
+				_swiz = value;
 			}
-			
 		]]>
 	</fx:Script>
-	
-	<s:VGroup width="100%" height="100%">
+		
+	<s:HGroup width="100%" height="100%" paddingLeft="5">
 		<!-- Create a Spark ButtonBar control to navigate 
 		the ViewStack container. -->
-		<s:ButtonBar dataProvider="{myViewStack}" change="viewChange(event)"/>
-		
+		<s:VGroup>
+
+			<project:ProjectPanel 
+				id="projectPanel" 
+				swiz="{_swiz}" 
+				projectModel="{projectModel}" 
+				definitionsModel="{definitionsModel}"/>
+		</s:VGroup>
 		<!-- Define the ViewStack and the three child containers. -->
 		<mx:ViewStack id="myViewStack" 
 					  borderStyle="solid"
@@ -88,45 +91,22 @@
 			
 			<s:NavigatorContent id="createContent" label="Diagram">
 				<s:HGroup width="100%" height="100%">
-					<s:VGroup height="100%">
-						<s:Button id="loadFile" label="load.." click="dispatcher.dispatchEvent(new CommandEvent(CommandEvent.COMMAND_FILE_LOAD))"/>
-						<s:Button id="saveFile" label="save.." click="dispatcher.dispatchEvent(new CommandEvent(CommandEvent.COMMAND_FILE_SAVE))"/>
-						<s:Button id="createState" label="create state" click="diagram.stateCreate()"/>
-					</s:VGroup>
 					<diagram:Diagram 
 						id="diagram" 
 						FSMmodel="{fsmModel}" 
 						width="100%" height="100%"  
 						doubleClickEnabled="true" 
 						doubleClick="diagram.stateCreate(true)"/>
-					<s:VGroup height="100%" width="200">
-						<s:Spacer height="10"/>
-						<s:Label text="Project Source" textAlign="center" width="100%" fontSize="15"/>
-						<s:TextInput id="projectRoot" width="100%" prompt="project root" selectable="false" click="projectRoot_clickHandler(event)" text="{projectModel.sourceURL}"/>
-						<s:TextInput id="projectFramework" width="100%" prompt="project framework" text="{projectModel.framework}"/>
-						<mx:TabNavigator width="200" resizeToContent="true" selectedIndex="2">
-							<s:NavigatorContent width="100%" height="100%" label="Model">
-								<s:List width="100%" height="100%" dataProvider="{projectModel.models}" labelField="name"/>
-							</s:NavigatorContent>
-							<s:NavigatorContent width="100%" height="100%" label="View">
-								<s:List width="100%" height="100%" dataProvider="{projectModel.views}" labelField="name"/>
-							</s:NavigatorContent>
-							<s:NavigatorContent width="100%" height="100%" label="Controller">
-								<s:List width="100%" height="100%" dataProvider="{projectModel.controllers}" labelField="name"/>
-							</s:NavigatorContent>
-						</mx:TabNavigator>
-						
-					</s:VGroup>
 				</s:HGroup>
 				<s:Label id="currentVersion" text="{AutoUpdater.versionString}" bottom="0" right="0"/>
 			</s:NavigatorContent>
 			
-			<s:NavigatorContent id="outputContent" label="Robotlegs">
+			<s:NavigatorContent id="outputContent" label="Code">
 				<writer:CodePreview id="output" width="100%" height="100%" creationComplete="outputUpdate(event)"/>
 			</s:NavigatorContent>
 		</mx:ViewStack>
-	</s:VGroup>
-	
+	</s:HGroup>
+	<s:ButtonBar dataProvider="{myViewStack}" change="viewChange(event)" top="0" right="0"/>
 	
 	
 	

@@ -26,7 +26,7 @@ package mvcs.controller.application
 		
 		public function execute():void
 		{
-			fsmModel = fileIOService.readObjectFromFile("FSMModel.fsm") as FSMModel;
+			fsmModel = fileIOService.readObjectFromFile(".fsm", projectModel.projectRoot) as FSMModel;
 		}
 	}
 }

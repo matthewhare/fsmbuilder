@@ -24,9 +24,9 @@ package mvcs.services
 			fileStream.close();
 		}
 		
-		public function readObjectFromFile(fname:String):Object
+		public function readObjectFromFile(fname:String, dir:String):Object
 		{
-			var file:File = File.desktopDirectory.resolvePath(fname);
+			var file:File = new File(dir + File.separator + fname);
 			
 			if(file.exists) {
 				var obj:Object;

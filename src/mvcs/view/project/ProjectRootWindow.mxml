@@ -21,9 +21,9 @@
 			{
 				folderTree.directory = File.userDirectory;
 				
-				if (projectModel.sourceURL && projectModel.sourceURL.length > 0)
+				if (projectModel.projectRoot && projectModel.projectRoot.length > 0)
 				{
-					folderTree.selectedPath = projectModel.sourceURL;
+					folderTree.selectedPath = projectModel.projectRoot;
 				}
 				else 
 					folderTree.directory = File.userDirectory;
@@ -31,7 +31,7 @@
 			
 			protected function clickHandler(event:MouseEvent):void
 			{
-				projectModel.sourceURL = folderTree.selectedPath;
+				projectModel.projectRoot = folderTree.selectedPath;
 				PopUpManager.removePopUp(this);
 			}
 			
