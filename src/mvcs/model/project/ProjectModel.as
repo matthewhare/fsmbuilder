@@ -5,10 +5,12 @@ package mvcs.model.project
 	
 	import framework.events.PayloadEvent;
 	
+	import mvcs.model.project.vo.ClassGroupVO;
 	import mvcs.model.project.vo.SearchFileVO;
 	import mvcs.services.FileSystemSearchService;
 	
 	import mx.collections.ArrayCollection;
+
 
 	public class ProjectModel
 	{
@@ -17,7 +19,7 @@ package mvcs.model.project
 		private var _projectRoot:String;
 		private var _projectSource:String;
 		private var _framework:String;
-		private var _classes:XML;
+		private var _classes:ArrayCollection;
 		
 		private var _controllers:ArrayCollection
 		private var _models:ArrayCollection
@@ -34,19 +36,33 @@ package mvcs.model.project
 		// search source
 		protected function searchSource():void
 		{
-			classes = new XML();
+			var classes:ArrayCollection = new ArrayCollection([]);
 			
+			// find groups / root nodes for files
+			var groupNames:XMLList = _frameworkDefinitions.framework.(@name=="robotlegs").classes.group.@name
 			
+			for (var i:int = 0; i < groupNames.length(); i++) 
+			{
+				var classGroup:ClassGroupVO = new ClassGroupVO();
+					classGroup.name = groupNames[i];
+					classGroup.searchDirectory = this.projectRoot;
+					classGroup.filenamePattern = _frameworkDefinitions.framework.(@name=="robotlegs").classes.group.(@name==groupNames[i]).match.(@type=="filename").text()	
+					
+				classes.source.push(classGroup);
+			}
 			
-			var modelSearch:FileSystemSearchService = new FileSystemSearchService();
-				modelSearch.addEventListener("searchComplete", modelsUpdate)
-				modelSearch.search(_projectSource, "model");
-			var viewSearch:FileSystemSearchService = new FileSystemSearchService();
-				viewSearch.addEventListener("searchComplete", viewsUpdate)
-				viewSearch.search(_projectSource, "view");
-			var controllerSearch:FileSystemSearchService = new FileSystemSearchService();
-				controllerSearch.addEventListener("searchComplete", controllersUpdate)
-				controllerSearch.search(_projectSource, "command");
+				
+			this.classes = classes;
+//			
+//			var modelSearch:FileSystemSearchService = new FileSystemSearchService();
+//				modelSearch.addEventListener("searchComplete", modelsUpdate)
+//				modelSearch.search(_projectSource, "model");
+//			var viewSearch:FileSystemSearchService = new FileSystemSearchService();
+//				viewSearch.addEventListener("searchComplete", viewsUpdate)
+//				viewSearch.search(_projectSource, "view");
+//			var controllerSearch:FileSystemSearchService = new FileSystemSearchService();
+//				controllerSearch.addEventListener("searchComplete", controllersUpdate)
+//				controllerSearch.search(_projectSource, "command");
 		}
 		
 		protected function modelsUpdate(event:Event):void
@@ -151,12 +167,12 @@ package mvcs.model.project
 		}
 
 		[Bindable]
-		public function get classes():XML
+		public function get classes():ArrayCollection
 		{
 			return _classes;
 		}
 
-		public function set classes(value:XML):void
+		public function set classes(value:ArrayCollection):void
 		{
 			_classes = value;
 		}

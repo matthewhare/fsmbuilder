@@ -72,10 +72,10 @@
 		]]>
 	</fx:Script>
 		
-	<s:HGroup width="100%" height="100%" paddingLeft="5">
+	<mx:HDividedBox width="100%" height="100%" paddingLeft="10">
 		
 		<project:ProjectPanel 
-			id="projectPanel" 
+			id="projectPanel"
 			swiz="{_swiz}" 
 			projectModel="{projectModel}" 
 			definitionsModel="{definitionsModel}"/>
@@ -103,7 +103,7 @@
 			</s:NavigatorContent>
 			
 		</mx:ViewStack>
-	</s:HGroup>
+	</mx:HDividedBox>
 	
 	<!-- view navigation -->
 	<s:ButtonBar dataProvider="{myViewStack}" change="viewChange(event)" top="0" right="0"/>

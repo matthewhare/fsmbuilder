@@ -1,8 +1,9 @@
-<framework name="robotlegs">
+<framework name="purvemvc">
 	<library>
 		<group name="LibraryName">
 			<match type="filename">
-					<![CDATA[\brobotlegs-framework-v(\d.*)]]>
+					<![CDATA[\bPureMVC_AS3_2_0_3(\d_*)]]>
+					<!-- PureMVC_AS3_2_0_3.swc -->
 			</match>
 			<match type="package">
 					<![CDATA[org.robotlegs]]>
@@ -32,14 +33,6 @@
 		<group name="Controller">
 			<match type="filename">
 					<![CDATA[(\bCommand([A-Z]\w*)|(\w*)Command\b)(.as)]]>
-			</match>
-			<match type="content">
-				<![CDATA[import(\s*)org.robotlegs.mvcs.Command([A-Za-z0-9_.\s]*)extends([\s]*)Command]]>
-			</match>
-		</group>
-		<group name="Services">
-			<match type="filename">
-					<![CDATA[(\bService([A-Z]\w*)|(\w*)Service\b)(.as)]]>
 			</match>
 			<match type="content">
 				<![CDATA[import(\s*)org.robotlegs.mvcs.Command([A-Za-z0-9_.\s]*)extends([\s]*)Command]]>
