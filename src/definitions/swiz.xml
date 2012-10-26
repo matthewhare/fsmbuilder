@@ -4,6 +4,9 @@
 			<match type="filename">
 					<![CDATA[\bswiz-framework-v(\d.*)]]>
 			</match>
+			<match type="package">
+					<![CDATA[org.swizframework]]>
+			</match>
 			<match type="version">
 					<![CDATA[(\d*)\.(\d*)\.(\d*)]]>
 			</match>

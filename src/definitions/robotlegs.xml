@@ -4,6 +4,9 @@
 			<match type="filename">
 					<![CDATA[\brobotlegs-framework-v(\d.*)]]>
 			</match>
+			<match type="package">
+					<![CDATA[org.robotlegs]]>
+			</match>
 			<match type="version">
 					<![CDATA[(\d*)\.(\d*)\.(\d*)]]>
 			</match>

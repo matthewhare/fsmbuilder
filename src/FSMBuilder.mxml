@@ -73,42 +73,39 @@
 	</fx:Script>
 		
 	<s:HGroup width="100%" height="100%" paddingLeft="5">
-		<!-- Create a Spark ButtonBar control to navigate 
-		the ViewStack container. -->
-		<s:VGroup>
+		
+		<project:ProjectPanel 
+			id="projectPanel" 
+			swiz="{_swiz}" 
+			projectModel="{projectModel}" 
+			definitionsModel="{definitionsModel}"/>
 
-			<project:ProjectPanel 
-				id="projectPanel" 
-				swiz="{_swiz}" 
-				projectModel="{projectModel}" 
-				definitionsModel="{definitionsModel}"/>
-		</s:VGroup>
-		<!-- Define the ViewStack and the three child containers. -->
+		<!-- collection of views -->
 		<mx:ViewStack id="myViewStack" 
 					  borderStyle="solid"
 					  height="100%"
 					  width="100%">
 			
-			<s:NavigatorContent id="createContent" label="Diagram">
-				<s:HGroup width="100%" height="100%">
+			<!-- diagram view -->
+			<s:NavigatorContent id="diagramView" label="Diagram">
 					<diagram:Diagram 
 						id="diagram" 
 						FSMmodel="{fsmModel}" 
 						width="100%" height="100%"  
 						doubleClickEnabled="true" 
 						doubleClick="diagram.stateCreate(true)"/>
-				</s:HGroup>
 				<s:Label id="currentVersion" text="{AutoUpdater.versionString}" bottom="0" right="0"/>
 			</s:NavigatorContent>
 			
-			<s:NavigatorContent id="outputContent" label="Code">
+			<!-- code view -->
+			<s:NavigatorContent id="codeView" label="Code">
 				<writer:CodePreview id="output" width="100%" height="100%" creationComplete="outputUpdate(event)"/>
 			</s:NavigatorContent>
+			
 		</mx:ViewStack>
 	</s:HGroup>
+	
+	<!-- view navigation -->
 	<s:ButtonBar dataProvider="{myViewStack}" change="viewChange(event)" top="0" right="0"/>
-	
-	
-	
 	
 </s:WindowedApplication>
