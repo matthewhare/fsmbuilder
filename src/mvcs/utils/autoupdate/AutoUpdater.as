@@ -114,6 +114,11 @@ package mvcs.utils.autoupdate
 			AutoUpdater.versionString = "error : " + event.toString()
 //			Alert.show(event.toString()); 
 		} 
+		
+		public function checkNow():void
+		{
+			appUpdater.checkNow();
+		}
 
 		
 		[Bindable]
