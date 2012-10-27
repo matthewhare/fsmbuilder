@@ -7,6 +7,9 @@ package mvcs.model.project.vo
 
 	public class ClassGroupVO
 	{
+		protected var _fileNamePattern:String;
+		protected var _contentPattern:String;
+		
 		protected var _searchDirectory:String;
 		protected var _search:FileSystemSearchService = new FileSystemSearchService();
 		
@@ -39,8 +42,21 @@ package mvcs.model.project.vo
 
 		public function set filenamePattern(value:String):void
 		{
+			_fileNamePattern = value;
 			_search.addEventListener("searchComplete", childrenUpdate)
 			_search.search(_searchDirectory, value);
+		}
+		
+		public function get filenamePattern():String
+		{
+			return _fileNamePattern;
+		}
+		
+		protected function fileContentValidate():void
+		{
+			// take each file one by one, load them, and check for regexp
+			
+			// if validated, add to children
 		}
 		
 		protected function childrenUpdate(event:Event):void
@@ -50,7 +66,7 @@ package mvcs.model.project.vo
 			{
 				var classVO:ClassVO = new ClassVO();
 					classVO.file = _search.resultData[i] as File;
-					
+//					classVO.validateFile()
 				_children.push(classVO);
 			}
 			
@@ -64,6 +80,16 @@ package mvcs.model.project.vo
 		public function set searchDirectory(value:String):void
 		{
 			_searchDirectory = value;
+		}
+
+		public function get contentPattern():String
+		{
+			return _contentPattern;
+		}
+
+		public function set contentPattern(value:String):void
+		{
+			_contentPattern = value;
 		}
 
 		
