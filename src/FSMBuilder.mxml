@@ -69,6 +69,10 @@
 			{
 				_swiz = value;
 			}
+			public function get swiz():ISwiz
+			{
+				return _swiz;
+			}
 		]]>
 	</fx:Script>
 		

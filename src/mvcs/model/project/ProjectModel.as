@@ -14,24 +14,19 @@ package mvcs.model.project
 
 	public class ProjectModel
 	{
+		private var _framework:String;
 		private var _frameworkDefinitions:XML;
 		private var _frameworkDefinitionDetected:XML;
+
 		private var _projectRoot:String;
 		private var _projectSource:String;
-		private var _framework:String;
+		
 		private var _classes:ArrayCollection;
 		
-		private var _controllers:ArrayCollection
-		private var _models:ArrayCollection
-		private var _views:ArrayCollection
 		
 		public function ProjectModel()
 		{
 		}
-		
-		
-		// detect project type
-			// find supported libs
 		
 		// search source
 		protected function searchSource():void
@@ -51,25 +46,9 @@ package mvcs.model.project
 					classGroup.validate();
 				classes.source.push(classGroup);
 			}
-			
+
 				
 			this.classes = classes;
-		}
-		
-		protected function modelsUpdate(event:Event):void
-		{
-			
-			models = FileSystemSearchService(event.currentTarget).resultData;
-		}
-		
-		protected function viewsUpdate(event:Event):void
-		{
-			views = FileSystemSearchService(event.currentTarget).resultData;
-		}
-		
-		protected function controllersUpdate(event:Event):void
-		{
-			controllers = FileSystemSearchService(event.currentTarget).resultData;
 		}
 		
 		protected function frameworkDetect():void
@@ -115,40 +94,6 @@ package mvcs.model.project
 			frameworkDetect();
 		}
 	
-		
-		[Bindable]
-		public function get controllers():ArrayCollection
-		{
-			return _controllers;
-		}
-
-		public function set controllers(value:ArrayCollection):void
-		{
-			_controllers = value;
-		}
-
-		[Bindable]
-		public function get models():ArrayCollection
-		{
-			return _models;
-		}
-
-		public function set models(value:ArrayCollection):void
-		{
-			_models = value;
-		}
-
-		[Bindable]
-		public function get views():ArrayCollection
-		{
-			return _views;
-		}
-
-		public function set views(value:ArrayCollection):void
-		{
-			_views = value;
-		}
-
 		[Bindable]
 		public function get framework():String
 		{
@@ -158,17 +103,6 @@ package mvcs.model.project
 		public function set framework(value:String):void
 		{
 			_framework = value;
-		}
-
-		[Bindable]
-		public function get classes():ArrayCollection
-		{
-			return _classes;
-		}
-
-		public function set classes(value:ArrayCollection):void
-		{
-			_classes = value;
 		}
 
 		public function get frameworkDefinitions():XML
@@ -181,6 +115,16 @@ package mvcs.model.project
 			_frameworkDefinitions = value;
 		}
 
+		[Bindable]
+		public function get classes():ArrayCollection
+		{
+			return _classes;
+		}
+
+		public function set classes(value:ArrayCollection):void
+		{
+			_classes = value;
+		}
 
 	}
 }

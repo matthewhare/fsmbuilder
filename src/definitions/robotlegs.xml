@@ -18,7 +18,7 @@
 					<![CDATA[(\bModel([A-Z]\w*)|(\w*)Model\b)(.as|.mxml)]]>
 			</match>
 			<match type="content">
-				<![CDATA[import(\s*)org.robotlegs.mvcs.Actor([A-Za-z0-9_.\s]*)extends([\s]*)Actor]]>
+				
 			</match>
 		</group>
 		<group name="View">
@@ -26,15 +26,15 @@
 					<![CDATA[(\bMediator([A-Z]\w*)|(\w*)Mediator\b)(.as|.mxml)]]>
 			</match>
 			<match type="content">
-				<![CDATA[import(\s*)org.robotlegs.mvcs.Mediator([A-Za-z0-9_.\s]*)extends([\s]*)Mediator]]>
+				<![CDATA[(?s)import(\s*)org.robotlegs.mvcs(.*)extends([\s]*)(Mediator)]]>
 			</match>
 		</group>
 		<group name="Controller">
 			<match type="filename">
-					<![CDATA[(\bCommand([A-Z]\w*)|(\w*)Command\b)(.as)]]>
+					<![CDATA[(\b(Command|Cmd)([A-Z]\w*)|(\w*)(Command|Cmd)\b)(.as)]]>
 			</match>
 			<match type="content">
-				<![CDATA[import(\s*)org.robotlegs.mvcs.Command([A-Za-z0-9_.\s]*)extends([\s]*)Command]]>
+				<![CDATA[(?s)import(\s*)org.robotlegs.mvcs(.*)extends([\s]*)(Command|SignalCommand)]]>
 			</match>
 		</group>
 		<group name="Services">

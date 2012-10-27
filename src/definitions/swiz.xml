@@ -34,7 +34,15 @@
 					<![CDATA[(\bCommand([A-Z]\w*)|(\w*)Command\b)(.as)]]>
 			</match>
 			<match type="content">
-				<![CDATA[import(\s*)org.swizframework.utils.commands.ICommand([A-Za-z0-9;-_\.\[\]\s\]*)implements([\s]*)ICommand]]>
+				<![CDATA[import(\s*)org.swizframework.utils.commands.ICommand(.*)implements([\s]*)ICommand]]>
+			</match>
+		</group>
+		<group name="Swiz Events">
+			<match type="filename">
+					<![CDATA[(\bEvent([A-Z]\w*)|(\w*)Event\b).as]]>
+			</match>
+			<match type="content">
+				
 			</match>
 		</group>
 	</classes>
