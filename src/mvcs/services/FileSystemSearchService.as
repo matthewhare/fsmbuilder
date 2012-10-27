@@ -22,6 +22,7 @@ package mvcs.services
 		{
 		}
 		
+		public var data:Object;
 		private var currentNodes:Array = []; // The nodes (files and directories) in the current directory
 		private var directoryStack:Array = []; // An array of directories (File objects) to search.
 		private var currentSubdirectories:Array; // An array of directories in the current directory.

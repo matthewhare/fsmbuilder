@@ -18,7 +18,7 @@
 					<![CDATA[(\bModel([A-Z]\w*)|(\w*)Model\b)(.as|.mxml)]]>
 			</match>
 			<match type="content">
-				<![CDATA[import(\s*)org.robotlegs.mvcs.Actor([A-Za-z0-9_.\s]*)extends([\s]*)Actor]]>
+				
 			</match>
 		</group>
 		<group name="View">
@@ -26,7 +26,7 @@
 					<![CDATA[(\bMediator([A-Z]\w*)|(\w*)Mediator\b)(.as|.mxml)]]>
 			</match>
 			<match type="content">
-				<![CDATA[import(\s*)org.robotlegs.mvcs.Mediator([A-Za-z0-9_.\s]*)extends([\s]*)Mediator]]>
+				
 			</match>
 		</group>
 		<group name="Controller">
@@ -34,7 +34,7 @@
 					<![CDATA[(\bCommand([A-Z]\w*)|(\w*)Command\b)(.as)]]>
 			</match>
 			<match type="content">
-				<![CDATA[import(\s*)org.robotlegs.mvcs.Command([A-Za-z0-9_.\s]*)extends([\s]*)Command]]>
+				<![CDATA[import(\s*)org.swizframework.utils.commands.ICommand([A-Za-z0-9;-_\.\[\]\s\]*)implements([\s]*)ICommand]]>
 			</match>
 		</group>
 	</classes>

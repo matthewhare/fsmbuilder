@@ -15,7 +15,7 @@ package mvcs.model.project
 	public class ProjectModel
 	{
 		private var _frameworkDefinitions:XML;
-		private var _frameworkMatched:XML;
+		private var _frameworkDefinitionDetected:XML;
 		private var _projectRoot:String;
 		private var _projectSource:String;
 		private var _framework:String;
@@ -37,32 +37,23 @@ package mvcs.model.project
 		protected function searchSource():void
 		{
 			var classes:ArrayCollection = new ArrayCollection([]);
-			
+			var frameworkName:String = _frameworkDefinitionDetected.@name;
 			// find groups / root nodes for files
-			var groupNames:XMLList = _frameworkDefinitions.framework.(@name=="robotlegs").classes.group.@name
+			var groupNames:XMLList = _frameworkDefinitions.framework.(@name==frameworkName).classes.group.@name
 			
 			for (var i:int = 0; i < groupNames.length(); i++) 
 			{
 				var classGroup:ClassGroupVO = new ClassGroupVO();
 					classGroup.name = groupNames[i];
-					classGroup.searchDirectory = this.projectRoot;
-					classGroup.filenamePattern = _frameworkDefinitions.framework.(@name=="robotlegs").classes.group.(@name==groupNames[i]).match.(@type=="filename").text()	
-					
+					classGroup.searchDirectory = _projectSource;
+					classGroup.fileContentPattern = _frameworkDefinitions.framework.(@name==frameworkName).classes.group.(@name==groupNames[i]).match.(@type=="content").text()
+					classGroup.filenamePattern = _frameworkDefinitions.framework.(@name==frameworkName).classes.group.(@name==groupNames[i]).match.(@type=="filename").text()	
+					classGroup.validate();
 				classes.source.push(classGroup);
 			}
 			
 				
 			this.classes = classes;
-//			
-//			var modelSearch:FileSystemSearchService = new FileSystemSearchService();
-//				modelSearch.addEventListener("searchComplete", modelsUpdate)
-//				modelSearch.search(_projectSource, "model");
-//			var viewSearch:FileSystemSearchService = new FileSystemSearchService();
-//				viewSearch.addEventListener("searchComplete", viewsUpdate)
-//				viewSearch.search(_projectSource, "view");
-//			var controllerSearch:FileSystemSearchService = new FileSystemSearchService();
-//				controllerSearch.addEventListener("searchComplete", controllersUpdate)
-//				controllerSearch.search(_projectSource, "command");
 		}
 		
 		protected function modelsUpdate(event:Event):void
@@ -94,6 +85,7 @@ package mvcs.model.project
 				{
 					var frameworkSearch:FileSystemSearchService = new FileSystemSearchService();
 						frameworkSearch.addEventListener("searchFound", frameworkUpdate)
+						frameworkSearch.data = frameworkDefinitions..framework[j];
 						frameworkSearch.search(_projectRoot + "/" + folders[i], frameworks[j]);
 				}
 				
@@ -102,7 +94,10 @@ package mvcs.model.project
 		
 		protected function frameworkUpdate(event:PayloadEvent):void
 		{
+			var search:FileSystemSearchService = FileSystemSearchService(event.target)
+			_frameworkDefinitionDetected = search.data as XML;
 			framework = "("+File(event.payload).name.replace(/(-framework-)|(-)|(.swc)/g," ").substr(0,-1)+")";
+			searchSource();
 		}
 
 		
@@ -118,7 +113,6 @@ package mvcs.model.project
 			_projectRoot = value;
 			_projectSource = value + "/src"
 			frameworkDetect();
-			searchSource();
 		}
 	
 		
