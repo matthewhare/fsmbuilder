@@ -5,6 +5,8 @@ Finite State Machine(FSM) Builder
 
 Finite State Machine builder. Design and build a Finite State Machine, then generate the code directly to the project.
 
+The app detects which framework you the project is using, and builds the code specificially for that framework.
+
 
 ***Objectives***
 
